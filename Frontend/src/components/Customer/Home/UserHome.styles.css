@@ -1,0 +1,14 @@
+.jumbotron {
+  background-image: url("../../../Assets/BackgroundImages/cust_home.jpg");
+  background-size: cover;
+  /* height: 100%; */
+  height: 1000px;
+  display: flex;
+  justify-content: center;
+}
+.container2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

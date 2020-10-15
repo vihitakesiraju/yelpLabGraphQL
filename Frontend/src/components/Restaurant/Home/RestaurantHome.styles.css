@@ -1,0 +1,130 @@
+.homeGrid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 15px;
+  width: 50%;
+  align-self: center;
+  margin: 30px;
+}
+
+/* .grp {
+    width: 120px;
+  } */
+
+.homeLayout {
+  /* display: flex;
+    justify-content: space-between; */
+  align-items: center;
+  height: 100%;
+}
+.sq {
+  text-align: center;
+  text-decoration: none;
+
+  padding-top: 25%;
+  min-width: 140px;
+  min-height: 140px;
+  max-width: 140px;
+}
+
+.image_rest_home {
+  background-color: #490d40;
+  background: url(../../../Assets/BackgroundImages/rest_jumbo.jpg) no-repeat
+    center center;
+  background-size: cover;
+  height: 570px;
+  margin-top: -20px;
+
+  .heading {
+    color: white;
+    text-align: center;
+    padding-top: 200px;
+  }
+}
+.navbar {
+  height: 80px;
+  background-color: transparent;
+  border: none;
+  color: whitesmoke;
+  z-index: 100;
+  transition: background-color 1s ease 0s;
+}
+
+.navbar-default {
+  .navbar-brand {
+    margin-top: 20px;
+    color: red;
+
+    &:hover {
+      color: #c57ed3;
+      border: 4px solid #c57ed3;
+    }
+  }
+
+  .navbar-nav {
+    > li {
+      > a {
+        color: red;
+        margin: 10px 5px 5px 5px;
+      }
+      > a:hover,
+      > a:active,
+      > a:focus {
+        color: #c57ed3;
+        border: 1px solid #c57ed3;
+      }
+      > a:visited {
+        color: #c57ed3;
+        text-decoration: none;
+      }
+    }
+    .active {
+      > a,
+      > a:hover,
+      > a:focus {
+        background-color: transparent;
+        color: #c57ed3;
+      }
+    }
+  }
+
+  .navbar-toggle {
+    border-color: #c57ed3;
+
+    &:hover,
+    &:focus {
+      background-color: #490d40;
+    }
+
+    .icon-bar {
+      color: #c57ed3;
+      background-color: #c57ed3;
+    }
+  }
+
+  .navbar-collapse.collapse.in ul {
+    background-color: #490d40;
+  }
+} //end .navbar-default
+
+/* Solid class attached on scroll past first section */
+
+.navbar.solid {
+  background-color: #490d40;
+  transition: background-color 1s ease 0s;
+  box-shadow: 0 0 4px grey;
+
+  .navbar-brand {
+    color: #c57ed3;
+    transition: color 1s ease 0s;
+  }
+
+  .navbar-nav {
+    > li {
+      > a {
+        color: #c57ed3;
+        transition: color 1s ease 0s;
+      }
+    }
+  }
+}

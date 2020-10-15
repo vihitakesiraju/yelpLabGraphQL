@@ -1,0 +1,22 @@
+.restImage2 {
+  object-fit: cover;
+  width: 120px;
+  height: 120px;
+  margin-left: 15px;
+}
+.formDataRes {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto;
+  justify-content: stretch;
+  justify-content: space-evenly;
+  gap: 2px 4px;
+  border: solid 1px rgb(85, 8, 8);
+  border-radius: 3px;
+  padding: 10px;
+  margin: 20px;
+  /* width: 850px; */
+}
+/* .menuItemRes {
+  width: 700px;
+} */

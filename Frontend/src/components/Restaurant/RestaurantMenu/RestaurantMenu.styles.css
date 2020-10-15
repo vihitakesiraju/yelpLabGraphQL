@@ -1,0 +1,27 @@
+.menuList {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+}
+
+.menuPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menuListFlex2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.image {
+  background-color: #490d40;
+  background-image: url(../../../Assets/BackgroundImages/menu_icon.jpg)
+    no-repeat;
+
+  center: center;
+  background-size: cover;
+  height: 570px;
+  margin-top: -20px;
+}
