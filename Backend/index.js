@@ -1,10 +1,12 @@
-require("dotenv").config({ path: __dirname + "/.env" });
+//require("dotenv").config({ path: __dirname + "/.env" });
+require("dotenv").config();
 let routeConstants = require("./config/routeConstants");
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
 var session = require("express-session");
 var cookieParser = require("cookie-parser");
+const connecttodb = require("./dbConnections/mongoose");
 var cors = require("cors");
 app.set("view engine", "ejs");
 const path = require("path");
@@ -15,7 +17,7 @@ app.use(cors({ origin: `${routeConstants.FRONTEND_URL}`, credentials: true }));
 app.use("/imageData", express.static(path.join(__dirname, "imageData")));
 
 // app.use(express.static(path.join(__dirname, 'imageData')));
-
+connecttodb;
 const customerRoutes = require("./routes/customerRoutes");
 const loginRoutes = require("./routes/loginRoute");
 const restaurantRoutes = require("./routes/restaurantRoutes");
