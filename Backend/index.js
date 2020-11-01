@@ -17,7 +17,7 @@ app.use(cors({ origin: `${routeConstants.FRONTEND_URL}`, credentials: true }));
 app.use("/imageData", express.static(path.join(__dirname, "imageData")));
 
 // app.use(express.static(path.join(__dirname, 'imageData')));
-connecttodb;
+//connecttodb;
 const customerRoutes = require("./routes/customerRoutes");
 const loginRoutes = require("./routes/loginRoute");
 const restaurantRoutes = require("./routes/restaurantRoutes");
