@@ -6,6 +6,12 @@ const connecttodb = require('./config/mongoose');
 
 
 var login_credentials=require('./services/loginServices');
+var customer_data=require('./services/customerServices');
+var restaurant=require('./services/restaurantServices');
+var events=require('./services/eventServices');
+var reviews=require('./services/reviewServices');
+var orders=require('./services/orderServices');
+var images=require('./services/imageServices')
 connecttodb;
 
 function handleTopicRequest(topic_name,fname){
@@ -43,3 +49,6 @@ function handleTopicRequest(topic_name,fname){
 //handleTopicRequest("post_book",Books)
 //handleTopicRequest("post_book",Books)
 handleTopicRequest("post_login",login_credentials)
+handleTopicRequest("customer_data",customer_data)
+handleTopicRequest("restaurant_data",restaurant)
+handleTopicRequest("image_data",images)

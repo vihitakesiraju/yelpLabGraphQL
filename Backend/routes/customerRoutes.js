@@ -1,6 +1,6 @@
 const express = require("express");
 const customerRouter = express.Router();
-const customerServices = require("../services/customerServices");
+const customerServices = require("../kafkaservices/customerServices");
 
 const {
   GET_CUSTOMER_PROFILE,
@@ -19,7 +19,7 @@ customerRouter
   .route(POST_CUSTOMER_SIGNUP)
   .post(customerServices.createCustomer);
 //customerRouter.route(POST_CUSTOMER_IMAGE).post(customerServices.uploadImage);
-customerRouter
-  .route(UPDATE_CUSTOMER_PROFILE)
-  .put(customerServices.updateCustomerProfile);
-module.exports = customerRouter;
+// customerRouter
+//   .route(UPDATE_CUSTOMER_PROFILE)
+//   .put(customerServices.updateCustomerProfile);
+ module.exports = customerRouter;
