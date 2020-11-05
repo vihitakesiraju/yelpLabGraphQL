@@ -53,8 +53,8 @@ class Payment extends Component {
             primary_phone: this.state.primary_phone,
             payment_card_digits: this.state.cardno.slice(this.state.cardno.length - 4, this.state.cardno.length),
             cart_items: this.props.cart.cart,
-            customer_email: cookie.load('email'),
-            restaurant_id: localStorage.getItem("restaurant_id"),
+            customer_id:this.props.cart.customer_id,
+            restaurant_id: this.props.cart.restaurant_id,
             order_type: localStorage.getItem("order_type"),
             order_status: 6,
             order_total_price: this.props.cart.cartTotal,
@@ -282,7 +282,7 @@ class Payment extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        cart: state.CartReducer
+        cart: state
     }
 }
 

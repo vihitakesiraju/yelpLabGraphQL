@@ -6,6 +6,7 @@ import CustomButton from "../../Common/CustomButton/CustomButton";
 import { Route } from "react-router";
 import cookie from "react-cookies";
 import routeConstants from "../../../Config/routeConstants";
+import {connect} from 'react-redux'
 class UserProfile extends Component {
   state = {
     customer_id: 0,
@@ -49,14 +50,14 @@ class UserProfile extends Component {
         `${routeConstants.BACKEND_URL}/customer${routeConstants.GET_CUSTOMER_PROFILE}`,
         {
           params: {
-            email_id: cookie.load("email"),
+            customer_id:this.props.customer_id,
           },
         }
       )
       .then((res) => {
         // console.log(this.state);
         this.setState(
-          { oldDetails: { ...res.data[0] }, ...res.data[0] },
+          { oldDetails: { ...res.data }, ...res.data},
           () => {
             // console.log(this.state);
           }
@@ -105,6 +106,7 @@ class UserProfile extends Component {
 
     const req = {
       ...userDetails,
+      customer_id:this.props.customer_id
     };
     // console.log(req)
     axios
@@ -330,4 +332,17 @@ class UserProfile extends Component {
   }
 }
 
-export default UserProfile;
+//export default UserProfile;
+const mapStateToProps=(state)=>{
+  return {
+    customer_id:state.customer_id
+  }
+}
+
+const mapDispatchToProps=(dispatch)=>{
+  return{
+
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(UserProfile)

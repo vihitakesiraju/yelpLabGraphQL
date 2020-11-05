@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Route, withRouter } from "react-router-dom";
-import cookie from "react-cookies";
+import { Route } from "react-router-dom";
+//import cookie from "react-cookies";
 import Login from "./components/Common/Login/Login";
 import CommonNavbar from "./components/Common/Navbar/CommonNavbar";
 import { connect } from "react-redux";
@@ -9,7 +9,7 @@ import CreateUser from "./components/Customer/SignUp/CreateCustomer";
 import UserHome from "./components/Customer/Home/UserHome";
 import UserNavbar from "./components/Customer/UserNavbar/UserNavbar";
 import UserProfile from "./components/Customer/Profile/CustomerProfile";
-import UserProfileRedux from "./components/Customer/Profile/CustomerProfileRedux";
+//import UserProfileRedux from "./components/Customer/Profile/CustomerProfileRedux";
 import RestaurantList from "./components/Customer/RestaurantList/RestaurantList";
 
 import RestaurantHome from "./components/Restaurant/Home/RestaurantHome";
@@ -43,7 +43,7 @@ class Main extends Component {
     if (this.props.loggedIn) {
       if (this.props.user_type == 1) {
         navbarRender = <Route path="/customer" component={UserNavbar} />;
-      } else if (this.props.user_type == 2) {
+      } else if (this.props.user_type ==2) {
         navbarRender = (
           <Route path="/restaurant" component={RestaurantNavbar} />
         );
@@ -114,8 +114,8 @@ class Main extends Component {
 // export default Main;
 const mapStateToProps = (state) => {
   return {
-    loggedIn: state.loginReducer.loggedIn,
-    user_type: state.loginReducer.user_type,
+    loggedIn: state.loggedIn,
+    user_type: state.user_type,
   };
 };
 

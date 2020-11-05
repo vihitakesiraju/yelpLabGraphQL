@@ -1,14 +1,16 @@
 module.exports = {
-  USER_SIGNUP: "userSignup",
-  USER_LOGIN: "userLogin",
-  USER_LOGOUT: "userLogout",
-  USER_GET_PROFILE: "userGetProfile",
-  USER_UPDATE_PROFILE: "userUpdateProfile",
-  COUNTER: "counter",
+  USER_SIGNUP: 'userSignup',
+  USER_LOGIN: 'userLogin',
+  USER_LOGOUT: 'userLogout',
+  USER_GET_PROFILE: 'userGetProfile',
+  USER_UPDATE_PROFILE: 'userUpdateProfile',
+  COUNTER: 'counter',
 
-  LOGIN_EMAIL_HANDLER: "loginEmailHandler",
-  LOGIN_PASSWORD_HANDLER: "loginPasswordHandler",
-  LOGIN_AUTHFLAG_HANDLER: "loginAuthFlagHandler",
+
+
+  LOGIN_EMAIL_HANDLER: 'loginEmailHandler',
+  LOGIN_PASSWORD_HANDLER: 'loginPasswordHandler',
+  LOGIN_AUTHFLAG_HANDLER: 'loginAuthFlagHandler',
 
   SIGNUP_NAME: "name",
   SIGNUP_EMAIL: "email",
@@ -30,4 +32,12 @@ module.exports = {
   CART_ADD_ITEM: "cartAddItem",
   CART_REMOVE_ITEM: "cartRemoveItem",
   CART_CLEAR: "clearCart",
-};
+
+
+  SET_RESTAURANT_ID: "setRestaurantID",
+  SET_CUSTOMER_ID: "setCustomerID",
+  SET_SEARCH_STRING: "setSearchString",
+  SET_ORDER_ID: "setOrderID",
+
+
+}

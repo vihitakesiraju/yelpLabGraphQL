@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import "./CreateEvent.styles.css";
-import { Redirect, withRouter } from "react-router-dom";
+//import { Redirect, withRouter } from "react-router-dom";
 import cookie from "react-cookies";
 import Axios from "axios";
 import routeConstants from "../../../Config/routeConstants";
 import jumborest from "../../../Assets/BackgroundImages/rest_jumbo.jpg";
+import {connect} from 'react-redux'
 class CreateEvent extends Component {
   state = {
     event_name: "",
@@ -24,7 +25,9 @@ class CreateEvent extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    console.log("in handle submit create event")
     console.log(this.props);
+    console.log("")
     // localStorage.setItem('event_id', this.props.props.res.event_id)
     if (cookie.load("cookie")) {
       const d = {
@@ -36,6 +39,7 @@ class CreateEvent extends Component {
         event_latitude: this.state.event_latitude,
         event_longitude: this.state.event_longitude,
         event_hashtags: this.state.event_hashtags,
+        event_creator_id: this.props.restaurant_id,
       };
 
       Axios.post(
@@ -53,7 +57,7 @@ class CreateEvent extends Component {
         });
     } else {
       window.alert("Login to Register");
-      this.props.props.props.history.push("/login");
+      this.props.props.history.push("/login");
       // this.setState({ redirectA: true })
     }
   };
@@ -108,7 +112,7 @@ class CreateEvent extends Component {
     }
   };
   render() {
-    let profileURL = `${routeConstants.BACKEND_URL}${this.state.image_path}`;
+    //let profileURL = `${routeConstants.BACKEND_URL}${this.state.image_path}`;
 
     return (
       <div className="cont">
@@ -204,4 +208,18 @@ class CreateEvent extends Component {
 }
 
 // export default RestaurantCard;
-export default withRouter(CreateEvent);
+//export default withRouter(CreateEvent);
+const mapStateToProps = (state) => {
+  return {
+      restaurant_id: state.restaurant_id
+      
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateEvent);

@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
 import { Redirect } from "react-router-dom";
-
+import {connect} from 'react-redux'
+import {setOrderID} from '../../../../reduxConfig/CommonActions'
 class RestaurantOrdersCard extends Component {
     state = {
         redirect: false,
@@ -42,7 +43,7 @@ class RestaurantOrdersCard extends Component {
         //         }} />
         // }
         const restData = { ...this.props.props.res }
-        if (restData.order_date != undefined) {
+        if (restData.order_date !== undefined) {
             restData.order_date = restData.order_date.split('T')[0]
         }
 
@@ -54,7 +55,7 @@ class RestaurantOrdersCard extends Component {
                     {restData.restaurant_name}
                 </h3>
                 <h5>
-                    Status:{this.state.cat[restData.order_status]}
+                    Status:{restData.order_status}
                 </h5>
                 <h5>
                     Time: {restData.order_time}
@@ -80,4 +81,20 @@ class RestaurantOrdersCard extends Component {
 }
 
 // export default RestaurantCard;
-export default withRouter(RestaurantOrdersCard);
+//export default withRouter(RestaurantOrdersCard);
+const mapStateToProps = (state) => {
+    return {
+        customer_id: state.customer_id,
+        order_id: state.order_id,
+        restaurant_id: state.restaurant_id
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setOrderID: (order_id) => dispatch(setOrderID(order_id))
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RestaurantOrdersCard));

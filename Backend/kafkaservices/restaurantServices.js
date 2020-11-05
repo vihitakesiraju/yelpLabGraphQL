@@ -8,6 +8,13 @@ const {
   TEXT_PLAIN,
   RES_INTERNAL_SERVER_ERROR,
   POST_RESTAURANT_SIGNUP,
+  UPDATE_RESTAURANT_PROFILE,
+  GET_RESTAURANT_MENU,
+  GET_RESTAURANT_SEARCH,
+  GET_ALL_RESTAURANTS,
+  GET_RESTAURANT_PROFILE,
+  UPDATE_MENU_ITEM,
+  POST_MENU_ITEM,
 } = require("../config/routeConstants");
 var kafka = require('../kafka/client');
 module.exports.createRestaurant = (req, res) => {
@@ -34,13 +41,15 @@ module.exports.createRestaurant = (req, res) => {
             res.end();
         }
   
-})};
+})
+
+};
 
 module.exports.getMenuByEmail = (req, res) => {
   console.log("Inside Restaurant GET menu service");
   console.log(req.query);
   kafka.make_request('restaurant_data', {
-    api: "GET_RESTAURANT_MENU",
+    api: GET_RESTAURANT_MENU,
     body: req.query
 }, function (err, results) {
     console.log('in result');
@@ -66,7 +75,7 @@ module.exports.getAllRestaurants = (req, res) => {
   console.log("Inside Restaurant GET menu service");
   console.log(req.query);
   kafka.make_request('restaurant_data', {
-    api: "GET_ALL_RESTAURANTS",
+    api: GET_ALL_RESTAURANTS,
     body: req.query
 }, function (err, results) {
     console.log('in result');
@@ -92,7 +101,7 @@ module.exports.getRestaurantProfile = (req, res) => {
   console.log("Inside Restaurant GET Profile service");
   console.log(req.query);
   kafka.make_request('restaurant_data', {
-    api: "GET_RESTAURANT_PROFILE",
+    api: GET_RESTAURANT_PROFILE,
     body: req.query
 }, function (err, results) {
     console.log('in result');
@@ -118,7 +127,7 @@ module.exports.updateRestaurantProfile = (req, res) => {
   console.log("Inside Restaurant PUT profile service");
   console.log("req body" + JSON.stringify(req.body));
   kafka.make_request('restaurant_data', {
-    api: "UPDATE_RESTAURANT_PROFILE",
+    api: UPDATE_RESTAURANT_PROFILE,
     body: req.body
 }, function (err, results) {
     console.log('in result');
@@ -145,7 +154,7 @@ module.exports.updateMenuItem = (req, res) => {
   console.log("Inside Restaurant PUT menuItem service");
   console.log("req body" + JSON.stringify(req.body));
   kafka.make_request('restaurant_data', {
-    api: "UPDATE_MENU_ITEM",
+    api: UPDATE_MENU_ITEM,
     body: req.body
 }, function (err, results) {
     console.log('in result');
@@ -173,7 +182,7 @@ module.exports.createMenuItem = (req, res) => {
   console.log("Inside Restaurant POST menuItem service");
   console.log("req body" + JSON.stringify(req.body));
   kafka.make_request('restaurant_data', {
-    api: "POST_MENU_ITEM",
+    api: POST_MENU_ITEM,
     body: req.body
 }, function (err, results) {
     console.log('in result');
@@ -200,7 +209,7 @@ module.exports.getRestaurantSearch = (req, res) => {
   console.log("Inside Restaurant GET Search service");
   console.log(req.query);
   kafka.make_request('restaurant_data', {
-    api: "GET_RESTAURANT_SEARCH",
+    api: GET_RESTAURANT_SEARCH,
     body: req.query
 }, function (err, results) {
     console.log('in result');

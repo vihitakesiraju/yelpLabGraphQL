@@ -15,6 +15,7 @@ class RestaurantNavbar extends Component {
     cookie.remove("cookie", { path: "/" });
     cookie.remove("email", { path: "/" });
     cookie.remove("user_type", { path: "/" });
+    localStorage.clear()
     this.props.logout();
     this.props.history.push("/");
   };

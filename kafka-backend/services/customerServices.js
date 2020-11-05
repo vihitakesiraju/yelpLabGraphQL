@@ -45,6 +45,15 @@ customerdetails.save().then((res)=>{
  
  else if(msg.api===route.GET_ALL_CUSTOMER_PROFILES){
     console.log("get all customer profiles")
+    customer.find({},
+        (err,result)=>{
+            if(err){
+            callback(err,'Error')
+            }
+            else{
+                callback(null,result)
+            }
+        })
  }
  else if(msg.api===route.GET_CUSTOMER_PROFILE){
     customer.findOne({email_id:msg.body.EMAIL},

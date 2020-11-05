@@ -1,9 +1,10 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
 import routeConstants from '../../../Config/routeConstants';
-import cookie from 'react-cookies'
+//import cookie from 'react-cookies'
 import './EventList.styles.css'
 import RegistrationCardCustomer from './EventCard/RegistrationCardCustomer';
+import {connect} from 'react-redux'
 class DisplayRegistrationsCustomer extends Component {
     state = {
         resData: []
@@ -14,7 +15,7 @@ class DisplayRegistrationsCustomer extends Component {
         // console.log(this.props)
         Axios.get(`${routeConstants.BACKEND_URL}/events${routeConstants.GET_REGISTRATIONS_CUSTOMER}`, {
             params: {
-                email_id: cookie.load('email')
+                customer_id:this.props.customer_id
             }
 
         }).then((res) => {
@@ -44,4 +45,19 @@ class DisplayRegistrationsCustomer extends Component {
     }
 }
 
-export default DisplayRegistrationsCustomer;
+//export default DisplayRegistrationsCustomer;
+const mapStateToProps = (state) => {
+    return {
+        restaurant_id: state.restaurant_id,
+        user_type: state.user_type,
+        customer_id: state.customer_id
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DisplayRegistrationsCustomer); 

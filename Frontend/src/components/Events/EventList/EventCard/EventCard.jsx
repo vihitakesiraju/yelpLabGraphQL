@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "./EventCard.styles.css";
-import { Redirect, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import cookie from "react-cookies";
 import Axios from "axios";
 import routeConstants from "../../../../Config/routeConstants";
-
+import {connect} from 'react-redux'
 class EventCard extends Component {
   state = {
     redirect: false,
@@ -14,18 +14,15 @@ class EventCard extends Component {
     // console.log(this.props);
     // localStorage.setItem('event_id', this.props.props.res.event_id)
     if (cookie.load("cookie")) {
-      // this.props.props.props.history.push({
-      //     pathname: '/customer/event',
-      //     state: {
-      //         order_id: this.props.props.res.order_id
-      //     }
-      // })
-      // this.setState({ redirectB: true })
+      console.log(routeConstants.BACKEND_URL)
+      console.log(routeConstants.POST_EVENT_REGISTRATION)
       Axios.post(
         `${routeConstants.BACKEND_URL}/events${routeConstants.POST_EVENT_REGISTRATION}`,
         {
-          email_id: cookie.load("email"),
-          event_id: this.props.props.res.event_id,
+          //email_id: cookie.load("email"),
+          //event_id: this.props.props.res.event_id,
+          customer_id: this.props.props.res.event_id,
+          event_id:this.props.props.res._id
         }
       )
         .then((res) => {
@@ -92,4 +89,19 @@ class EventCard extends Component {
 }
 
 // export default RestaurantCard;
-export default withRouter(EventCard);
+//export default withRouter(EventCard);
+const mapStateToProps = (state) => {
+  return {
+      restaurant_id: state.restaurant_id,
+      user_type: state.user_type,
+      customer_id: state.customer_id
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(EventCard));

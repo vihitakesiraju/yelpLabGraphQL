@@ -4,6 +4,7 @@ import routeConstants from '../../../Config/routeConstants';
 import cookie from 'react-cookies'
 import RegistrationCard from './EventCard/RegistrationCard'
 import './EventList.styles.css'
+//import {connect} from 'react-redux'
 class DisplayRegistrationsRestaurant extends Component {
     state = {
         resData: []

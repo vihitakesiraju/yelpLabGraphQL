@@ -2,11 +2,7 @@ const mongoose = require("mongoose");
 let Schema = mongoose.Schema;
 
 const dishes_schema = new Schema({
-    menu_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref:'menu_data',
-        required: true
-    },
+    
     dish_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
@@ -33,8 +29,7 @@ const dishes_schema = new Schema({
         required: true
     },
     category_id: {
-        type: Number,
-        enum: [1,2,3,4,5],
+        type: String,
         required: true
     },
 
@@ -44,5 +39,4 @@ const dishes_schema = new Schema({
 module.exports = dishes_data = mongoose.model(
     "dishes_data",
     dishes_schema,
-    "dishes_data"
   );

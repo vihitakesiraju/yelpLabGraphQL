@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import routeConstants from "../../../Config/routeConstants";
 import RestaurantCard from "./RestaurantCard/RestaurantCard";
 import "./RestaurantList.styles.css";
+import {connect} from 'react-redux'
 class RestaurantList extends Component {
   state = {
     resData: [],
@@ -70,20 +71,20 @@ class RestaurantList extends Component {
   render() {
     let resList = [];
     if (this.state.resData.length > 0) {
-      resList = this.state.resData.map((res) => {
+      resList = this.state.resData.map((res,key) => {
         let obj = {
           res: res,
           props: this.props,
         };
-        return <RestaurantCard props={obj} />;
+        return <RestaurantCard props={obj} key={key} />;
       });
     }
     return (
       <div className="cont">
         <div className="searchComp">
-          <form class="form-inline" onSubmit={this.searchHandler}>
+          <form className="form-inline" onSubmit={this.searchHandler}>
             <input
-              class="form-control mr-sm-2"
+              className="form-control mr-sm-2"
               type="text"
               name="search_string"
               style={{ width: "450px" }}
@@ -92,7 +93,7 @@ class RestaurantList extends Component {
               onChange={this.inputChangeHandler}
               aria-label="Search"
             />
-            <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">
+            <button className="btn btn-outline-danger my-2 my-sm-0" type="submit">
               Search
             </button>
           </form>
@@ -107,4 +108,17 @@ class RestaurantList extends Component {
   }
 }
 
-export default RestaurantList;
+//export default RestaurantList;
+const mapStateToProps = (state) => {
+  return {
+      restaurant_id: state.restaurant_id
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RestaurantList)

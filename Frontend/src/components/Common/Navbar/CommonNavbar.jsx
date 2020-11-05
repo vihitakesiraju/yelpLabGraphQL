@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import cookie from "react-cookies";
-import { Redirect } from "react-router";
+//import { Link } from "react-router-dom";
+//import cookie from "react-cookies";
+//import { Redirect } from "react-router";
 import bgImage from "../../../Assets/BackgroundImages/yelp-1-logo.png";
 // import { login, logout } from '../../../reduxConfig/LoginActions'
 // import { connect } from 'react-redux';

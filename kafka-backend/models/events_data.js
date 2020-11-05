@@ -8,7 +8,7 @@ const events_schema = new Schema({
     },
     event_name: {
         type: String,
-        required: true,
+   
     },
     event_description: {
         type: String,
@@ -41,9 +41,14 @@ const events_schema = new Schema({
         type: String,
         
     },
-    image_url: {
-        type: String,
-    },
+    image_url: 
+        [{type:String}]
+    ,
+    events_registered:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'registrations_data'
+    }]
+
  
 });
 

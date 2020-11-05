@@ -17,6 +17,7 @@ class UserNavbar extends Component {
     cookie.remove("cookie", { path: "/" });
     cookie.remove("email", { path: "/" });
     cookie.remove("user_type", { path: "/" });
+    localStorage.clear();
     this.props.logout();
     this.props.history.push("/");
   };
@@ -72,7 +73,7 @@ class UserNavbar extends Component {
               <li className="nav-item dropdown active">
                 <a
                   className="nav-link dropdown-toggle"
-                  href="#"
+                  href="/customer/events"
                   id="navbarDropdown"
                   role="button"
                   data-toggle="dropdown"
@@ -154,7 +155,8 @@ class UserNavbar extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: state.ProfileReducer.loggedIn || state.loginReducer.loggedIn,
+    //loggedIn: state.ProfileReducer.loggedIn || state.loginReducer.loggedIn,
+    loggedIn:state.loggedIn
   };
 };
 

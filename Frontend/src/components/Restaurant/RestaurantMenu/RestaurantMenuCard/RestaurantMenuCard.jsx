@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { withStyles } from "@material-ui/core/styles";
+//import { withStyles } from "@material-ui/core/styles";
 
 import "./RestaurantMenuCard.styles.css";
 import menuIcon from "../../../../Assets/BackgroundImages/menu_icon.jpg";
@@ -72,12 +72,12 @@ class RestaurantMenuCard extends Component {
   render() {
     const { menuItem } = this.props;
     console.log(this.state.category_id);
-    const dish_dispatch = {
-      dish_id: menuItem.dish_id,
-      dish_name: menuItem.dish_name,
-      price: menuItem.price,
-      count: 1,
-    };
+    // const dish_dispatch = {
+    //   dish_id: menuItem.dish_id,
+    //   dish_name: menuItem.dish_name,
+    //   price: menuItem.price,
+    //   count: 1,
+    // };
     let imageURL = `${routeConstants.BACKEND_URL}${this.state.image_url}`;
 
     return (

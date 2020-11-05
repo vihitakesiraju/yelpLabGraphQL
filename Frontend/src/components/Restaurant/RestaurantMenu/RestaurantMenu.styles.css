@@ -16,9 +16,9 @@
 }
 
 .image {
-  background-color: #490d40;
-  background-image: url(../../../Assets/BackgroundImages/menu_icon.jpg)
-    no-repeat;
+  /* background-color: #490d40; */
+  /* background-image: url(../../../Assets/BackgroundImages/menu_icon.jpg)
+    no-repeat; */
 
   center: center;
   background-size: cover;

@@ -3,6 +3,8 @@ import React, { Component } from "react";
 import routeConstants from "../../../Config/routeConstants";
 import cookie from "react-cookies";
 import OrderCard from "./Ordercard/OrderCard";
+import {connect} from 'react-redux'
+import {setOrderID} from '../../../reduxConfig/CommonActions'
 class Orders extends Component {
   state = {
     resData: [],
@@ -14,7 +16,7 @@ class Orders extends Component {
       `${routeConstants.BACKEND_URL}/orders${routeConstants.GET_ORDER_BY_CUSTOMER}`,
       {
         params: {
-          customer_email: cookie.load("email"),
+          customer_id: this.props.customer_id
         },
       }
     )
@@ -46,4 +48,18 @@ class Orders extends Component {
   }
 }
 
-export default Orders;
+//export default Orders;
+const mapStateToProps=(state)=>{
+  return{
+    customer_id:state.customer_id,
+    order_id:state.order_id
+  };
+}
+
+const mapDispatchToProps=(dispatch)=>{
+  return {
+    setOrderID:(order_id)=>dispatch(setOrderID(order_id))
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Orders)

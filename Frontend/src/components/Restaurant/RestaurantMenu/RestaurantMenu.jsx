@@ -5,6 +5,7 @@ import cookie from "react-cookies";
 import RestaurantMenuCard from "./RestaurantMenuCard/RestaurantMenuCard";
 import "./RestaurantMenu.styles.css";
 import menuIcon from "../../../Assets/BackgroundImages/menu_icon.jpg";
+import {connect} from 'react-redux'
 class RestaurantMenu extends Component {
   state = {
     res: [],
@@ -19,14 +20,14 @@ class RestaurantMenu extends Component {
         {
           params: {
             // email: "Gustavo_Monk@example.com"
-            email: cookie.load("email"),
+            restaruant_id:this.props.restaurant_id
           },
         }
       )
       .then((res) => {
         console.log("Test data");
-        this.setState({ res: res.data });
-        console.log(res);
+        this.setState({ res: res.data});
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -43,23 +44,23 @@ class RestaurantMenu extends Component {
     if (this.state.res.length > 0) {
       dishes = this.state.res.map((dish) => {
         switch (dish.category_id) {
-          case 1: {
+          case "1": {
             desserts.push(<RestaurantMenuCard menuItem={dish} />);
             break;
           }
-          case 2: {
+          case "2": {
             salads.push(<RestaurantMenuCard menuItem={dish} />);
             break;
           }
-          case 3: {
+          case "3": {
             beverages.push(<RestaurantMenuCard menuItem={dish} />);
             break;
           }
-          case 4: {
+          case "4": {
             appetizers.push(<RestaurantMenuCard menuItem={dish} />);
             break;
           }
-          case 5: {
+          case "5": {
             mains.push(<RestaurantMenuCard menuItem={dish} />);
             break;
           }
@@ -89,4 +90,17 @@ class RestaurantMenu extends Component {
   }
 }
 
-export default RestaurantMenu;
+//export default RestaurantMenu;
+const mapStateToProps = (state) => {
+  return {
+      restaurant_id: state.restaurant_id
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RestaurantMenu);

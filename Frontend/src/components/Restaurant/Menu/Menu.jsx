@@ -8,6 +8,7 @@ import Checkout from "../../Customer/Checkout/Checkout";
 import CustomerReviews from "../../Customer/CustomerReviews/CustomerReviews";
 import MapDisplay from "../../Customer/MapDisplay/MapDisplay";
 import menuIcon from "../../../Assets/BackgroundImages/menu_icon.jpg";
+import {connect} from 'react-redux'
 class Menu extends Component {
   state = {
     res: [],
@@ -17,11 +18,12 @@ class Menu extends Component {
       .get(
         `${constants.BACKEND_URL}/restaurant/${constants.GET_RESTAURANT_MENU}`,
         {
-          params: { email: localStorage.getItem("restaurant_email") },
+          params: { restaurant_id:this.props.restaurant_id},
         }
       )
       .then((res) => {
         this.setState({ res: res.data });
+        console.log("this,state")
         console.log(res.data);
       })
       .catch((err) => {
@@ -35,34 +37,35 @@ class Menu extends Component {
     let beverages = [];
     let appetizers = [];
     let mains = [];
-    let dishes = this.state.res.map((dish) => {
+    if(this.state.res && this.state.res.length>0){
+     this.state.res.map((dish) => {
       // <MenuItem menuItem={dish} />
-      // console.log(dish.category_id)
+      console.log(dish.category_id)
       switch (dish.category_id) {
-        case 1: {
+        case "1": {
           desserts.push(<MenuItem menuItem={dish} />);
           break;
         }
-        case 2: {
+        case "2": {
           salads.push(<MenuItem menuItem={dish} />);
           break;
         }
-        case 3: {
+        case "3": {
           beverages.push(<MenuItem menuItem={dish} />);
           break;
         }
-        case 4: {
+        case "4": {
           appetizers.push(<MenuItem menuItem={dish} />);
           break;
         }
-        case 5: {
+        case "5": {
           mains.push(<MenuItem menuItem={dish} />);
           break;
         }
         default: {
         }
       }
-    });
+    });}
     // console.log(this.props)
     return (
       <div className="menuPage1">
@@ -91,4 +94,17 @@ class Menu extends Component {
   }
 }
 
-export default Menu;
+//export default Menu;
+const mapStateToProps = (state) => {
+  return {
+      restaurant_id: state.restaurant_id
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);

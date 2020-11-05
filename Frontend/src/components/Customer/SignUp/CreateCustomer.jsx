@@ -148,7 +148,7 @@ class CreateUser extends Component {
 
   render() {
     //redirect based on successful login
-    let redirectVar = null;
+    //let redirectVar = null;
     // if (cookie.load('cookie')) {
     //     redirectVar = <Redirect to="/home" />
     // }
@@ -281,17 +281,17 @@ class CreateUser extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    name: state.SignUpReducer.signup.name,
-    email: state.SignUpReducer.signup.email_id,
-    password: state.SignUpReducer.signup.password,
-    confirmPassword: state.SignUpReducer.signup.confirmPassword,
-    birthday: state.SignUpReducer.signup.birthday,
-    about: state.SignUpReducer.signup.about,
-    phone: state.SignUpReducer.signup.phone,
-    userType: state.SignUpReducer.signup.user,
-    thingsLoved: state.SignUpReducer.signup.thingsLoved,
-    findMe: state.SignUpReducer.signup.findMe,
-    blogs: state.SignUpReducer.signup.blogs,
+    name: state.signup.name,
+    email: state.signup.email_id,
+    password: state.signup.password,
+    confirmPassword: state.signup.confirmPassword,
+    birthday: state.signup.birthday,
+    about: state.signup.about,
+    phone: state.signup.phone,
+    userType: state.signup.user,
+    thingsLoved: state.signup.thingsLoved,
+    findMe: state.signup.findMe,
+    blogs: state.signup.blogs,
   };
 };
 

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Axios from "axios";
 import routeConstants from "../../../Config/routeConstants";
 import cookie from "react-cookies";
-
+import {connect} from 'react-redux'
 class CreateMenuItem extends Component {
   state = {
     description: "",
@@ -11,7 +11,8 @@ class CreateMenuItem extends Component {
     ingredients: "",
     menu_id: 0,
     price: 0,
-    email: cookie.load("email"),
+    //email: cookie.load("email"),
+    restaurant_id:this.props.restaurant_id
   };
   inputChangeHandler = (e) => {
     const { value, name } = e.target;
@@ -192,4 +193,17 @@ class CreateMenuItem extends Component {
   }
 }
 
-export default CreateMenuItem;
+//export default CreateMenuItem;
+const mapStateToProps = (state) => {
+  return {
+      restaurant_id: state.restaurant_id
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateMenuItem);

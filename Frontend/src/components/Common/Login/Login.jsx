@@ -6,9 +6,9 @@ import RouteConstants, { POST_LOGIN } from "../../../Config/routeConstants";
 import store from "../../../reduxConfig/store";
 import { connect } from "react-redux";
 import {
-  emailHandler,
-  passwordHandler,
-  authFlagHandler,
+  // emailHandler,
+  // passwordHandler,
+  // authFlagHandler,
   login,
 } from "../../../reduxConfig/LoginActions";
 import loginImage from "../../../Assets/BackgroundImages/yelp-1-logo.png";
@@ -135,17 +135,18 @@ class Login extends Component {
                 console.log("cust redirect");
                 cookie.save("cookie");
                 this.props.login({
-                  user_email: this.state.username,
-                  user_type: user_type,
+                  customer_id: response.data._id,
+                  user_type: response.data.user_type
                 });
                 this.props.history.push("/customer/home");
               } else if (response.data.user_type === 2) {
                 console.log("rest redirect");
                 cookie.save("cookie");
                 this.props.login({
-                  user_email: this.state.username,
-                  user_type: user_type,
+                  restaurant_id: response.data._id,
+                  user_type: response.data.user_type
                 });
+                console.log(this.props)
                 this.props.history.push("/restaurant/home");
               }
               else{
@@ -264,22 +265,21 @@ class Login extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    email_id: state.loginReducer.login.email_id,
-    password: state.loginReducer.login.password,
-    authFlag: state.loginReducer.login.authFlag,
-    loggedIn: state.loginReducer.loggedIn,
+    // email_id: state.loginReducer.login.email_id,
+    // password: state.loginReducer.login.password,
+    // authFlag: state.loginReducer.login.authFlag,
+    // loggedIn: state.loginReducer.loggedIn,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     // counterIncrement: (counter) => dispatch(counterIncrement(counter))
-    emailHandler: (email_id) => dispatch(emailHandler(email_id)),
-    passwordHandler: (password) => dispatch(passwordHandler(password)),
-    authFlagHandler: (authFlag) => dispatch(authFlagHandler(authFlag)),
+    // emailHandler: (email_id) => dispatch(emailHandler(email_id)),
+    // passwordHandler: (password) => dispatch(passwordHandler(password)),
+    // authFlagHandler: (authFlag) => dispatch(authFlagHandler(authFlag)),
     login: (loggedIn) => dispatch(login(loggedIn)),
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
-// export default Login;

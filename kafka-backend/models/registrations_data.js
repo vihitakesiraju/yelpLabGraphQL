@@ -12,16 +12,16 @@ const registrations_schema = new Schema({
         ref: 'customer_data',
         required: true
     },
-    registration_data:{
-       type:String,
+    registration_date:{
+       type:Date,
        required:true,
-       default: Date.now(),
+       
     },
 
     registration_time: {
         type: String,
         required: true,
-        default: `${Date.now().getHours}:${Date.now().getMinutes}:${Date.now().getSeconds}`
+       
     },
 
 });

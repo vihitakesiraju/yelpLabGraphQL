@@ -12,6 +12,7 @@ var events=require('./services/eventServices');
 var reviews=require('./services/reviewServices');
 var orders=require('./services/orderServices');
 var images=require('./services/imageServices')
+
 connecttodb;
 
 function handleTopicRequest(topic_name,fname){
@@ -52,3 +53,5 @@ handleTopicRequest("post_login",login_credentials)
 handleTopicRequest("customer_data",customer_data)
 handleTopicRequest("restaurant_data",restaurant)
 handleTopicRequest("image_data",images)
+handleTopicRequest("event_data",events)
+handleTopicRequest("order_data",orders)

@@ -1,6 +1,6 @@
 const express = require("express");
 const restaurantRouter = express.Router();
-const restaurantServices = require("../services/restaurantServices");
+const restaurantServices = require("../kafkaservices/restaurantServices");
 
 const {
   UPDATE_RESTAURANT_PROFILE,

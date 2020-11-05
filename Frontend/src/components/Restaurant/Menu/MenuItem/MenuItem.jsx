@@ -65,7 +65,7 @@ class MenuItem extends Component {
 
   render() {
     const { classes, menuItem } = this.props;
-    // console.log(menuItem)
+    console.log(menuItem)
     const dish_dispatch = {
       dish_id: menuItem.dish_id,
       dish_name: menuItem.dish_name,
@@ -96,7 +96,7 @@ class MenuItem extends Component {
             <IconButton
               aria-label="Add to Cart"
               onClick={() => {
-                console.log("addtocart");
+               
                 this.props.addToCart(dish_dispatch);
               }}
             >
@@ -105,7 +105,7 @@ class MenuItem extends Component {
             <IconButton
               aria-label="Remove from Cart"
               onClick={() => {
-                console.log("removecart");
+                
                 this.props.removeFromCart(dish_dispatch);
               }}
             >
@@ -145,7 +145,7 @@ class MenuItem extends Component {
     );
   }
 }
-const mapStateToProps = () => {
+const mapStateToProps = (state) => {
   return {};
 };
 

@@ -8,9 +8,6 @@ import { Route } from "react-router";
 import cookie from "react-cookies";
 import {
   nameHandler,
-  emailHandler,
-  passwordHandler,
-  confirmPasswordHandler,
   birthdayHandler,
   aboutHandler,
   phoneHandler,

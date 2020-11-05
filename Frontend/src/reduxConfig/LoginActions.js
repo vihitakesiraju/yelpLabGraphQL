@@ -1,4 +1,4 @@
-import actionTypes from './actionTypes';
+import actionTypes from '../reduxConfig/actionTypes';
 
 export const login = (payload) => {
     return {
@@ -32,14 +32,3 @@ export const authFlagHandler = (payload) => {
         payload: payload
     }
 }
-
-
-// export const counterIncrement = (payload) => {
-//     console.log("Counter Action called ->" + payload)
-//     return {
-//         type: actionTypes.COUNTER,
-//         payload: payload
-//     }
-// }
-
-

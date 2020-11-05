@@ -1,6 +1,6 @@
 const express = require("express");
 const eventRouter = express.Router();
-const eventServices = require("../services/eventServices");
+const eventServices = require("../kafkaservices/eventServices");
 
 const {
   GET_ALL_EVENTS,

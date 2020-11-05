@@ -19,17 +19,12 @@ class RegistrationCardCustomer extends Component {
 
         // }
 
-        const restData = { ...this.props.props.res }
-        // if (restData.order_date != undefined) {
-        //     restData.order_date = restData.order_date.split('T')[0]
-        // }
-        // console.log(this.props);
-        return (<div>
-            {/* {JSON.stringify(this.props.props)} */}
-            {/* {redirectVar} */}
-            <div className="restCard3">
+        const restData = { ...this.props.props.res, ...this.props.props.res.event_id }
+        let renderVar
+        if (restData && restData.event_date) {
+            renderVar = <div className="restCard3">
                 <div className="eventImage">
-                    <img className="img-thumbnail" style={{ "marginBottom": '15px' }} src={restData.image_url} width='200px' height='150px' />
+                    <img className="img-thumbnail" alt="eventImage" style={{ "marginBottom": '15px' }} src={restData.image_url} width='200px' height='150px' />
                     <h4>{restData.event_name}</h4>
                 </div>
                 <h5>{restData.restaurant_name}</h5>
@@ -41,6 +36,11 @@ class RegistrationCardCustomer extends Component {
                 <p>Registered Time: {restData.registration_time}</p>
                 <p>Registered Date: {restData.registration_date.split('T')[0]}</p>
             </div>
+        }
+        return (<div>
+            {/* {JSON.stringify(this.props.props)} */}
+            {/* {redirectVar} */}
+            {renderVar}
         </div>);
     }
 }

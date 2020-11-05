@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import store from "../../../reduxConfig/store";
+//import store from "../../../reduxConfig/store";
 import {
   addToCart,
   removeFromCart,
@@ -7,7 +7,7 @@ import {
 } from "../../../reduxConfig/Cart/CartActions";
 import { connect } from "react-redux";
 import EnhancedTable from "./Table/Table";
-import { useHistory } from "react-router-dom";
+//import { useHistory } from "react-router-dom";
 
 class CheckOut extends Component {
   // state = {
@@ -55,7 +55,7 @@ class CheckOut extends Component {
             <button onClick={() => this.props.addToCart(dish_dispatch)} >Increment</button> */}
         <EnhancedTable props={props} />
         <select
-          class="form-control"
+          className="form-control"
           // value={this.state.order_type}
           onChange={this.handleSelectChange}
           required
@@ -75,7 +75,7 @@ class CheckOut extends Component {
 }
 const mapStateToProps = (state) => {
   return {
-    cart: state.CartReducer,
+    cart: state,
   };
 };
 

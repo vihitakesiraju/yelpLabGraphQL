@@ -9,6 +9,7 @@ import { cookie } from "react-cookies";
 
 class RestaurantProfile extends Component {
   state = {
+    loaded:false,
     address_city: "",
     address_latitude: 0,
     address_longitude: 0,
@@ -38,6 +39,7 @@ class RestaurantProfile extends Component {
       .then((res) => {
         console.log(res);
         this.setState({
+          loaded:true,
           ...res.data[0],
         });
       })
@@ -310,7 +312,7 @@ class RestaurantProfile extends Component {
 const mapStateToProps = (state) => {
   console.log(state);
   return {
-    email_id: state.loginReducer.user_email,
+    email_id: state.user_email,
   };
 };
 
