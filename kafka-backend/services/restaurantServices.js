@@ -54,6 +54,7 @@ restaurantdetails.save().then((res)=>{
  
  else if(msg.api===route.POST_MENU_ITEM){
      console.log("in post menu item")
+     console.log(msg.body)
     let id = mongoose.Types.ObjectId()
 
     let dishes = new dishes_data({
@@ -73,7 +74,7 @@ restaurantdetails.save().then((res)=>{
                         callback(err, 'Error')
                     }
                     else {
-                        restaurant_data.findOneAndUpdate({ email: msg.body.email }, { $push: { "dishes": dishes } }, (err, result) => {
+                        restaurant_data.findByIdAndUpdate(msg.body.restaurant_id , { $addToSet: { "dishes": res._id } }, (err, result) => {
                             if (err) {
                                 console.log('Error ' + err)
                                 callback(err, 'Error')
@@ -88,6 +89,23 @@ restaurantdetails.save().then((res)=>{
                 })
  }
  else if(msg.api===route.GET_RESTAURANT_MENU){
+     console.log("in get restaurant_menu")
+     console.log(msg.body)
+    //  let restaurant = restaurant_data.find({ _id: msg.body.restaurant_id }).populate({
+    //     path: 'dishes',
+    //     model: 'dishes_data'
+    // }).exec((err, result) => {
+    //     if (err) {
+    //         console.log('Error occured while fetching Menu Items' + err)
+    //         callback(err, 'Error')
+    //     }
+    //     else {
+    //         console.log('Fetch Menu Items' + result)
+    //         callback(null, result.dishes)
+
+    //     }
+    // })
+
      restaurant_data.findOne({email:msg.body.email},
         (err,result)=>{
             console.log(result)
@@ -95,7 +113,8 @@ restaurantdetails.save().then((res)=>{
             callback(err,'Error')
             }
             else{
-                dishes_data.find({"_id":{"$in":result["dishes"]}},(err,results)=>{
+                console.log(result["dishes"])
+                dishes_data.find({_id:{"$in":result["dishes"]}},(err,results)=>{
                     console.log(results)
                     if(err){
                         callback(err,'Error')
@@ -104,6 +123,8 @@ restaurantdetails.save().then((res)=>{
                 callback(null,results)
                 }
                 })
+                // console.log("result in restaurant");
+                // console.log(result)
             }
         })
  }
@@ -157,13 +178,13 @@ restaurantdetails.save().then((res)=>{
 
  else if(msg.api===route.GET_RESTAURANT_PROFILE){
      console.log("restaurant search in kafka")
-    restaurant_data.find({ email: msg.body.email }, (err, result) => {
+    restaurant_data.find({ email: msg.body.email_id }, (err, result) => {
         if (err) {
             console.log('Error in fetching restaurant profile' + err)
             callback(err, 'Error')
         }
         else {
-            
+            console.log(result)
             callback(null, result)
         }
     })

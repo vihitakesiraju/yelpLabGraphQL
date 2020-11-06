@@ -12,12 +12,14 @@ class RestaurantOrders extends Component {
     }
 
 
-    componentDidMount = (e) => {
-        e.preventDefault()
+    componentDidMount = () => {
+        
         console.log("Orders")
+        console.log(this.props)
         Axios.get(`${routeConstants.BACKEND_URL}/orders${routeConstants.GET_ORDER_BY_RESTAURANT}`, {
             params: {
-                restaurant_id: this.props.restaurant_id
+                restaurant_id: this.props.login_id,
+                
             }
         }).then((res) => {
             this.setState({ resData: [...res.data] })
@@ -50,7 +52,8 @@ const mapStateToProps = (state) => {
     return {
         customer_id: state.customer_id,
         order_id: state.order_id,
-        restaurant_id: state.restaurant_id
+        restaurant_id: state.restaurant_id,
+        login_id: state.login_id
     };
 }
 

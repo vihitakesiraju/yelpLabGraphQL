@@ -312,7 +312,7 @@ class RestaurantProfile extends Component {
 const mapStateToProps = (state) => {
   console.log(state);
   return {
-    email_id: state.user_email,
+    email_id: state.email_id,
   };
 };
 

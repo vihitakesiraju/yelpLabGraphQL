@@ -1,134 +1,175 @@
 //const login=require('../models/login_credentials');
-const login_model = require("../models/login_credentials");
-const event_model=require("../models/events_data")
+
+
 const restaurant_data=require('../models/restaurant_data');
-const register_data=require('../models/registrations_data')
+const order_data=require('../models/orders_data')
+const cart_data=require('../models/cart_data')
+const delivery_data=require('../models/delivery_address')
+const dishes_data=require('../models/dishes_data')
+
 const { response } = require("express");
 const route = require('../../Backend/config/routeConstants')
 const mongoose=require('mongoose')
-const customer_data=require('../models/customer_data');
-//const events_data = require("../models/events_data");
+
 function handle_request(msg,callback){
-  console.log("in handle request")
+  console.log("in handle request orders")
     
     if(msg.api===route.POST_ORDER){
-      event_model.find({},(err,result)=>{
-        if (err) {
-          console.log("error " + err);
-          callback(err, 'Error')
-      }
-      else {   
-           console.log('events display' + result)
-                  callback(null, result)     
-          }
-      })
+        console.log("in post order")
+        console.log(msg.body)
+        let orderTotal = 0
+        let itemsList = [];
+        msg.body.cart_items.map(async (cartItem) => {
+            console.log(cartItem)
+            let temp = new cart_data({
+                dish_id: cartItem.dish_id,
+                // dish_name
+                count: cartItem.count
+            })
+            itemsList.push(temp)
+        })
+        let savedList = [];
+        cart_data.insertMany(itemsList).then((result) => {
 
+            savedList = result
+            console.log("Result" + savedList)
+            let deliveryAddress
+            if (msg.body.order_type === "Delivery") {
+                console.log("testing")
+                del_address = new delivery_data({
+                    delivery_address: msg.body.delivery_address,
+                    address_city: msg.body.address_city,
+                    // address_state: msg.body.address_state,
+                    address_postal_code: msg.body.address_postal_code,
+                    address_latitude: msg.body.address_latitude,
+                    address_longitude: msg.body.address_longitude,
+                    primary_phone: msg.body.primary_phone,
+                })
+                del_address.save().then((res) => {
+
+
+                    let oId = mongoose.Types.ObjectId()
+                    let date = new Date();
+                    let time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+                    let order = new order_data({
+                        order_id: oId,
+                        customer_id: msg.body.customer_id,
+                        restaurant_id: msg.body.restaurant_id,
+                        payment_card_digits: msg.body.payment_card_digits,
+                        cart_items: itemsList,
+                        order_type: msg.body.order_type,
+                        order_status: "Order Placed",
+                        order_total_price: msg.body.order_total_price,
+                        order_time: time,
+                        order_date: date,
+                        delivery_address: deliveryAddress,
+                        cart_items: itemsList
+                    })
+                    order.save().then((result) => {
+
+                        console.log('Order Created' + result)
+                        callback(null, result)
+                    })
+
+                }).catch((err) => {
+                    console.log('Error occured while creating Delivery -> Delivery' + err)
+                    callback(err, 'Error')
+                });
+            }
+            else {
+                let oId = mongoose.Types.ObjectId()
+                let date = new Date();
+                let time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+                let order = new order_data({
+                    order_id: oId,
+                    customer_id: msg.body.customer_id,
+                    restaurant_id: msg.body.restaurant_id,
+                    payment_card_digits: msg.body.payment_card_digits,
+                    cart_items: savedList,
+                    order_type: msg.body.order_type,
+                    order_status: "Order Placed",
+                    order_total_price: msg.body.order_total_price,
+                    order_time: time,
+                    order_date: date,
+                    delivery_address: deliveryAddress,
+                    cart_items: itemsList
+                })
+                order.save().then((result) => {
+
+                    console.log('Order Created' + result)
+                    callback(null, result)
+
+                }).catch((err) => {
+                    console.log('Error occured while creating Order -> Pickup' + err)
+                    callback(err, 'Error')
+                })
+            }
+
+        }).catch((err) => {
+            console.log(err);
+        })
     }
     else if(msg.api===route.GET_ORDER_BY_CUSTOMER){
       //let customerid=customer_data.findOne({email_id:msg.body.email_id})
-      let date=new Date;
-      let register=new register_data({
-          event_id:msg.body.event_id,
-          customer_id:msg.body.customer_id,
-          registration_date: date,
-          registration_time:`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
-
-         
-      })
-      console.log("post event registration"+register)
-      register.save().then((err, result) => {
-        console.log("event registration saved")
+      order_data.find({ customer_id: msg.body.customer_id }, (err, result) => {
         if (err) {
-            console.log("error " + err);
+            console.log('Error occured while fetching Orders' + err)
             callback(err, 'Error')
         }
-        else {   
-             console.log('event Created' + result)
-                   event_model.findOneAndUpdate({ _id: msg.body.event_id }, { $push: { "events_registered": register._id } }, (err, res) => {
-                        if (err) {
-                            console.log('Error ' + err)
-                            callback(err, 'Error')
-                        }
-                        else {
-                            console.log('Registrations' + res)
-                            callback(null, res)
-                        }
-                    })    
-            }})
+        else {
+            console.log('Orders fetched' + result)
+            callback(null, result)
+        }
+    })
   }
     
 else if(msg.api===route.GET_ORDER_BY_RESTAURANT){
 
-  console.log("Inside Events POST create service");
+  console.log("Inside get order by restaurant");
   console.log(msg.body)
-  if (msg.body.image_url == undefined) {
-    msg.body.image_url = "undefined";
-  }
-
-  let id=mongoose.Types.ObjectId()
-  let event_details=new event_model({
-    event_id:id,
-    event_name: msg.body.event_name,
-    event_description:msg.body.event_description,
-    event_date: msg.body.event_date,
-    event_time:msg.body.event_time,
-    event_creator_id:msg.body.event_creator_id,
-    event_latitude:msg.body.event_latitude,
-    event_longitude:msg.body.event_longitude,
-    event_hashtags: msg.body.event_hashtags,
-    image_url:msg.body.image_url,
-
-  })
-  event_details.save().then((err,result)=>{
-    if(err){
-      console.log("Error in saving",err)
-      callback(err, 'Error')
+  order_data.find({ restaurant_id: msg.body.restaurant_id }, (err, result) => {
+    if (err) {
+        console.log('Error occured while fetching Orders' + err)
+        callback(err, 'Error')
     }
-    else
-    {
-      console.log("saved event")
-      console.log(result)
-
-      callback(null, result) 
+    else {
+        console.log('Orders fetched' + result)
+        callback(null, result)
     }
-  })
+})
+  
     }
 
     else if(msg.api===route.GET_ORDER_BY_ID){
       console.log("Inside Events GET by restaurantID service");  
       
-      event_model.find({ event_creator_id: msg.body.restaurant_id }).sort('event_id').populate('event_id').exec(
-        (err, result) => {
-            if (err) {
-                console.log('Error occured while fetching Registrations' + err)
-                callback(err, 'Error')
-            }
-            else {
-                console.log('Registrations fetched' + result)
-                callback(null, result)
-            }
-        }
-    )
+      order_data.findOne({ order_id: msg.body.order_id }).populate({ path: 'cart_items', populate: { path: 'dish_id' } })
+                    .populate('delivery_address').populate('restaurant_id').populate({ path: 'cart_items.dishes', model: 'dishes_data' }).exec((err, result) => {
+                        if (err) {
+                            console.log('Error occured while fetching Order details' + err)
+                            callback(err, 'Error')
+                        }
+                        else {
+                            console.log('Order details fetched' + result)
+                           
+                        }
+                   
+                        callback(null, result)
+           
+                    })
       }
-      
-      
-      
-     
-
-    
     
     else if(msg.api===route.UPDATE_ORDER){
-      register_data.find({ customer_id: msg.body.customer_id },
-        (err, result) => {
+        order_data.findOneAndUpdate({ _id: msg.body.order_id }, { order_status: msg.body.order_status_id }, (err, result) => {
             if (err) {
-                console.log('Error occured while fetching Registrations' + err)
+                console.log('Error occured while updating order' + err)
                 callback(err, 'Error')
             }
             else {
-                console.log('get registrations by customer' + result)
+                console.log('Order updated' + result)
                 callback(null, result)
             }
-        }).populate('event_id')
+        })
     }
 
   

@@ -25,3 +25,30 @@ export const setOrderID = (payload) => {
         payload: payload
     }
 }
+
+export const setLoginID= (payload) => {
+    return {
+        type: actionTypes.SET_LOGIN_ID,
+        payload: payload
+    }
+}
+
+export const setRestID= (payload) => {
+    return {
+        type: actionTypes.SET_REST_ID,
+        payload: payload
+    }
+}
+
+export const setCustID= (payload) => {
+    return {
+        type: actionTypes.SET_CUST_ID,
+        payload: payload
+    }
+}
+export const setEmailID= (payload) => {
+    return {
+        type: actionTypes.SET_EMAIL_ID,
+        payload: payload
+    }
+}

@@ -1,5 +1,7 @@
 //const login=require('../models/login_credentials');
 const login_model = require("../models/login_credentials");
+const restaurant_data= require("../models/restaurant_data");
+const customer_data=require("../models/customer_data");
 const { response } = require("express");
 const route = require('../../Backend/config/routeConstants')
 function handle_request(msg,callback){
@@ -9,6 +11,7 @@ function handle_request(msg,callback){
 
    
     if(msg.api===route.POST_LOGIN){
+
       login_model.findOne({
         email_id: user_name,
       },function(err,result){
@@ -16,9 +19,45 @@ function handle_request(msg,callback){
         if(err){
           callback(err,"error");
         }
+       else{
         if(result.user_password === user_password){
-          callback(null,result);
+          if(result.user_type === 1){
+            customer_data.findOne({email_id:result.email_id},(error,results)=>{
+              if(error){
+                console.log('error'+error)
+                callback(error,'Error')
+              }
+              else{
+                console.log('result in customer login'+results)
+                let login={
+                  cred: result,
+                  customer: results
+                }
+                callback(null,login);
+              }
+            })
+
+          }
+          else{
+            restaurant_data.findOne({email:result.email_id},(error,results)=>{
+              if(error){
+                console.log('error'+error)
+                callback(error,'Error')
+              }
+              else{
+                console.log('result in restaurant login'+results)
+                let login={
+                  cred: result,
+                  restaurant:results
+                }
+                callback(null,login);
+              }
+            })
+
+          }
+          //callback(null,result);
         }
+      }
       })
 
     //   const login_details = login_model.findOne({

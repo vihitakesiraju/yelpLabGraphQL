@@ -117,40 +117,47 @@ class Login extends Component {
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
           console.log(response.data);
-          user_type = response.data.user_type;
+          user_type = response.data.cred.user_type;
           this.setState(
             {
               authFlag: true,
             },
             () => {
-              cookie.save("email", response.data.email_id, {
+              cookie.save("email", response.data.cred.email_id, {
                 path: "/",
               });
-              cookie.save("user_type", response.data.user_type, {
+              cookie.save("user_type", response.data.cred.user_type, {
                 path: "/",
               });
               console.log("Updated state");
               console.log(this.state.username)
-              if (response.data.user_type === 1) {
+              if (response.data.cred.user_type === 1) {
                 console.log("cust redirect");
                 cookie.save("cookie");
                 this.props.login({
-                  customer_id: response.data._id,
-                  user_type: response.data.user_type
+                  customer_id: response.data.cred._id,
+                  user_type: response.data.cred.user_type,
+                  login_id: response.data.customer._id,
+                  cust_id:response.data.customer.customer_id,
+                  email_id:response.data.cred.email_id
                 });
                 this.props.history.push("/customer/home");
-              } else if (response.data.user_type === 2) {
+              } else if (response.data.cred.user_type === 2) {
                 console.log("rest redirect");
                 cookie.save("cookie");
                 this.props.login({
-                  restaurant_id: response.data._id,
-                  user_type: response.data.user_type
+                  restaurant_id: response.data.cred._id,
+                  user_type: response.data.cred.user_type,
+                  login_id: response.data.restaurant._id,
+                  rest_id:response.data.restaurant.restaurant_id,
+                  email_id:response.data.cred.email_id
+                  
                 });
                 console.log(this.props)
                 this.props.history.push("/restaurant/home");
               }
               else{
-                console.log("else part for user_type"+response.data.user_type)
+                console.log("else part for user_type"+response.data.cred.user_type)
               }
             }
           );

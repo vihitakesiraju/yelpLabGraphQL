@@ -35,8 +35,7 @@ class CheckOut extends Component {
 
   handleSelectChange = (m) => {
     const { value, name } = m.target;
-    if (value == "Pickup") localStorage.setItem("order_type", 1);
-    else localStorage.setItem("order_type", 2);
+    localStorage.setItem("order_type", value);
 
     this.setState({ [name]: value });
   };

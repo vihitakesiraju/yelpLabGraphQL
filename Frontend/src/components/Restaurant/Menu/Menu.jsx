@@ -8,7 +8,7 @@ import Checkout from "../../Customer/Checkout/Checkout";
 import CustomerReviews from "../../Customer/CustomerReviews/CustomerReviews";
 import MapDisplay from "../../Customer/MapDisplay/MapDisplay";
 import menuIcon from "../../../Assets/BackgroundImages/menu_icon.jpg";
-import {connect} from 'react-redux'
+//import {connect} from 'react-redux'
 class Menu extends Component {
   state = {
     res: [],
@@ -18,12 +18,12 @@ class Menu extends Component {
       .get(
         `${constants.BACKEND_URL}/restaurant/${constants.GET_RESTAURANT_MENU}`,
         {
-          params: { restaurant_id:this.props.restaurant_id},
+          params: { email: localStorage.getItem("restaurant_email") }
         }
       )
       .then((res) => {
         this.setState({ res: res.data });
-        console.log("this,state")
+        console.log("this.state")
         console.log(res.data);
       })
       .catch((err) => {
@@ -94,17 +94,17 @@ class Menu extends Component {
   }
 }
 
-//export default Menu;
-const mapStateToProps = (state) => {
-  return {
-      restaurant_id: state.restaurant_id
-  };
-}
+export default Menu;
+// const mapStateToProps = (state) => {
+//   return {
+//       restaurant_id: state.restaurant_id
+//   };
+// }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
+// const mapDispatchToProps = (dispatch) => {
+//   return {
 
-  }
-}
+//   }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Menu);
+// export default connect(mapStateToProps, mapDispatchToProps)(Menu);

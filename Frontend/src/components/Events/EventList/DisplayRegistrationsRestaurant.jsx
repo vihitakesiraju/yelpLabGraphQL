@@ -12,7 +12,7 @@ class DisplayRegistrationsRestaurant extends Component {
 
 
     componentDidMount = () => {
-        // console.log(this.props)
+        console.log(this.props)
         Axios.get(`${routeConstants.BACKEND_URL}/events${routeConstants.GET_REGISTRATIONS_EVENT}`, {
             params: {
                 event_id: this.props.history.location.state.event_id

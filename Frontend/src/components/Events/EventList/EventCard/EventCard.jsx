@@ -21,7 +21,7 @@ class EventCard extends Component {
         {
           //email_id: cookie.load("email"),
           //event_id: this.props.props.res.event_id,
-          customer_id: this.props.props.res.event_id,
+          customer_id: this.props.customer_id,
           event_id:this.props.props.res._id
         }
       )

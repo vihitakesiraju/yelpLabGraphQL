@@ -38,6 +38,9 @@ module.exports = {
   SET_CUSTOMER_ID: "setCustomerID",
   SET_SEARCH_STRING: "setSearchString",
   SET_ORDER_ID: "setOrderID",
-
+  SET_LOGIN_ID: "setLoginID",
+  SET_REST_ID: "setRestID",
+  SET_CUST_ID: "setCustID",
+  SET_EMAIL_ID: "setEmailID",
 
 }

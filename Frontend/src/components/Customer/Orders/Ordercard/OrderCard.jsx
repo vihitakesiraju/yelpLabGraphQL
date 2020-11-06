@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import "./OrderCard.styles.css";
-import { Link } from "react-router-dom";
-import Menu from "../../../Restaurant/Menu/Menu";
+//import { Link } from "react-router-dom";
+//import Menu from "../../../Restaurant/Menu/Menu";
 import { withRouter } from "react-router-dom";
 import {connect} from 'react-redux'
 import {setOrderID} from '../../../../reduxConfig/CommonActions'
-import { Redirect } from "react-router-dom";
+//import { Redirect } from "react-router-dom";
 
 class OrderCard extends Component {
   state = {
@@ -22,16 +22,7 @@ class OrderCard extends Component {
     
   };
   render() {
-    // if (this.state.redirect) {
-    //     return <Redirect to={
-    //         {
-    //             pathname: 'menu',
-    //             state: {
-    //                 restaurant_email: this.props.props.res.email,
-    //                 restaurant_id: this.props.props.res.restaurant_id
-    //             }
-    //         }} />
-    // }
+   
     const restData = { ...this.props.props.res };
     if (restData.order_date !== undefined) {
       restData.order_date = restData.order_date.split("T")[0];

@@ -1,6 +1,6 @@
 const express = require("express");
 const orderRouter = express.Router();
-const orderServices = require("../services/orderServices");
+const orderServices = require("../kafkaservices/orderServices");
 
 const {
   GET_ORDER_BY_CUSTOMER,

@@ -211,7 +211,8 @@ class CreateEvent extends Component {
 //export default withRouter(CreateEvent);
 const mapStateToProps = (state) => {
   return {
-      restaurant_id: state.restaurant_id
+      restaurant_id: state.restaurant_id,
+    
       
   };
 }

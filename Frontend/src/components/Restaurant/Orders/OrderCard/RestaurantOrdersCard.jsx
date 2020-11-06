@@ -23,25 +23,11 @@ class RestaurantOrdersCard extends Component {
 
     handleClick = () => {
         console.log(this.props);
-        localStorage.setItem('order_id', this.props.props.res.order_id)
-        this.props.history.push({
-            pathname: '/restaurant/orderDetails',
-            state: {
-                order_id: this.props.props.res.order_id
-            }
-        })
+        this.props.setOrderID({ order_id: this.props.props.res.order_id })
+        this.props.history.push('/restaurant/orderDetails')
     }
     render() {
-        // if (this.state.redirect) {
-        //     return <Redirect to={
-        //         {
-        //             pathname: 'menu',
-        //             state: {
-        //                 restaurant_email: this.props.props.res.email,
-        //                 restaurant_id: this.props.props.res.restaurant_id
-        //             }
-        //         }} />
-        // }
+       
         const restData = { ...this.props.props.res }
         if (restData.order_date !== undefined) {
             restData.order_date = restData.order_date.split('T')[0]

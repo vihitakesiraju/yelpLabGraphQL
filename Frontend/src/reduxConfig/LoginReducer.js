@@ -15,7 +15,11 @@ const loginReducer = (state = initialState, action) => {
                 loggedIn: true,
                 customer_id: action.payload.customer_id,
                 restaurant_id: action.payload.restaurant_id,
-                user_type: action.payload.user_type
+                user_type: action.payload.user_type,
+                login_id: action.payload.login_id,
+                cust_id: action.payload.cust_id,
+                rest_id: action.payload.rest_id,
+                email_id:action.payload.email_id
             },
             console.log("action paylod for rest_id"+action.payload.restaurant_id)
             );

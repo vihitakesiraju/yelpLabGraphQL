@@ -20,7 +20,8 @@ class RestaurantMenu extends Component {
         {
           params: {
             // email: "Gustavo_Monk@example.com"
-            restaruant_id:this.props.restaurant_id
+            restaruant_id:this.props.restaurant_id,
+            email: cookie.load("email"),
           },
         }
       )
@@ -93,7 +94,7 @@ class RestaurantMenu extends Component {
 //export default RestaurantMenu;
 const mapStateToProps = (state) => {
   return {
-      restaurant_id: state.restaurant_id
+      restaurant_id: state.login_id
   };
 }
 

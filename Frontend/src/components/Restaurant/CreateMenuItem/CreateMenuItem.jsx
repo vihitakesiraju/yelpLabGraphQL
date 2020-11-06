@@ -196,7 +196,7 @@ class CreateMenuItem extends Component {
 //export default CreateMenuItem;
 const mapStateToProps = (state) => {
   return {
-      restaurant_id: state.restaurant_id
+      restaurant_id: state.login_id
   };
 }
 

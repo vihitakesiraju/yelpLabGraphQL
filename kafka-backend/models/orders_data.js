@@ -48,7 +48,14 @@ const orders_schema= new Schema({
         type: Number,
         required: true,
     },
-
+    delivery_address: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'delivery_address'
+    },
+    cart_items: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'cart_data'
+    }]
 });
 
 module.exports = orders_data = mongoose.model(

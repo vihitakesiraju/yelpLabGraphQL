@@ -1,14 +1,13 @@
 import React from "react";
-
 // import "./membership.styles.css";
 import TextField from "@material-ui/core/TextField";
 import "./Payment.styles.css";
 import { Component } from "react";
+import { Redirect } from "react-router";
 import CustomButton from "../../Common/CustomButton/CustomButton";
 import axios from "axios";
 import RouteConstants from "../../../Config/routeConstants";
-import { Link } from "react-router-dom";
-import { Grid } from "@material-ui/core";
+
 import MenuItem from '@material-ui/core/MenuItem';
 import { connect } from 'react-redux';
 import cookie from 'react-cookies'
@@ -42,6 +41,7 @@ class Payment extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+        console.log(this.state)
         console.log(this.props);
         const postObj = {
             delivery_address: this.state.delivery_address,
@@ -92,7 +92,7 @@ class Payment extends Component {
 
         ];
         let add = ""
-        if (localStorage.getItem('order_type') === "2") {
+        if (localStorage.getItem('order_type') === "Delivery") {
             add = <div>
                 <h4 className="display-4"> Delivery Address</h4>
 

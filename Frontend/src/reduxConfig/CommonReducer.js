@@ -41,6 +41,42 @@ const Common = (state = initialState, action) => {
                 }
                 );
             }
+        case actionTypes.SET_LOGIN_ID:
+            {
+                console.log("setting login_id")
+                return Object.assign({},
+                    state, {
+                    login_id: action.payload.login_id,
+                }
+                );
+            }
+            case actionTypes.SET_CUST_ID:
+                {
+                    console.log("setting cust_id")
+                    return Object.assign({},
+                        state, {
+                        cust_id: action.payload.cust_id,
+                    }
+                    );
+                }
+            case actionTypes.SET_REST_ID:
+                    {
+                        console.log("setting rest_id")
+                        return Object.assign({},
+                            state, {
+                            rest_id: action.payload.rest_id,
+                        }
+                        );
+                    }
+            case actionTypes.SET_EMAIL_ID:
+                        {
+                            console.log("setting email_id")
+                            return Object.assign({},
+                                state, {
+                                email_id: action.payload.email_id,
+                            }
+                            );
+                        }
         default:
             return state;
     }

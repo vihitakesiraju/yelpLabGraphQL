@@ -22,7 +22,7 @@ module.exports.createOrder = (req, res) => {
     api:POST_ORDER,
     body: req.body
   }
-  kafka.make_request('restaurant_data', data, function(err,results){
+  kafka.make_request('order_data', data, function(err,results){
     console.log('in result');
     console.log(results);
     if (err){
@@ -47,9 +47,9 @@ module.exports.getOrdersByCustomerID = (req, res) => {
   console.log(req.query);
   data={
     api:GET_ORDER_BY_CUSTOMER,
-    body: req.body
+    body: req.query
   }
-  kafka.make_request('restaurant_data', data, function(err,results){
+  kafka.make_request('order_data', data, function(err,results){
     console.log('in result');
     console.log(results);
     if (err){
@@ -74,9 +74,9 @@ module.exports.getOrdersByRestaurantID = (req, res) => {
   console.log(req.query);
   data={
     api:GET_ORDER_BY_RESTAURANT,
-    body: req.body
+    body: req.query
   }
-  kafka.make_request('restaurant_data', data, function(err,results){
+  kafka.make_request('order_data', data, function(err,results){
     console.log('in result');
     console.log(results);
     if (err){
@@ -101,9 +101,9 @@ module.exports.getOrdersByOrderID = (req, res) => {
   console.log(req.query);
   data={
     api:GET_ORDER_BY_ID,
-    body: req.body
+    body: req.query
   }
-  kafka.make_request('restaurant_data', data, function(err,results){
+  kafka.make_request('order_data', data, function(err,results){
     console.log('in result');
     console.log(results);
     if (err){
@@ -131,7 +131,7 @@ module.exports.updateOrderStatus = (req, res) => {
     api:UPDATE_ORDER,
     body: req.body
   }
-  kafka.make_request('restaurant_data', data, function(err,results){
+  kafka.make_request('order_data', data, function(err,results){
     console.log('in result');
     console.log(results);
     if (err){

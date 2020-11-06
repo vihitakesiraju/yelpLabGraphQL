@@ -50,7 +50,7 @@ class UserProfile extends Component {
         `${routeConstants.BACKEND_URL}/customer${routeConstants.GET_CUSTOMER_PROFILE}`,
         {
           params: {
-            customer_id:this.props.customer_id,
+            email_id:this.props.email_id,
           },
         }
       )
@@ -335,7 +335,7 @@ class UserProfile extends Component {
 //export default UserProfile;
 const mapStateToProps=(state)=>{
   return {
-    customer_id:state.customer_id
+    email_id:state.email_id
   }
 }
 

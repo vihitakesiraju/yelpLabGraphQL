@@ -9,6 +9,10 @@ export const initialState = {
   customer_id: "",
   restaurant_id: "",
   event_id:"",
+  login_id: "",
+  rest_id: "",
+  cust_id: "",
+  email_id:"",
   order_id: "",
   login: {
       email_id: "",

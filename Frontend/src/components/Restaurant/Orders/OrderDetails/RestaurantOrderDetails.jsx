@@ -7,7 +7,7 @@ class RestaurantOrderDetails extends Component {
   state = {
     resData: {},
     itemsArray: [],
-    order_status_id: 0,
+    order_status_id: "",
   };
   inputChangeHandler = (e) => {
     const { value, name } = e.target;
@@ -44,18 +44,21 @@ class RestaurantOrderDetails extends Component {
       .then((res) => {
         console.log(res);
 
-        this.setState(
-          {
-          ...res.data,order_status_id:res.data.orderDetails.order_status
-          }
-        );
+        this.setState({
+          resData: { ...res.data, ...res.data.restaurant_id }, order_status_id: res.data.order_status, itemsArray: [...res.data.cart_items]
+      }, () => {
+          console.log(this.state.itemsArray)
+          console.log(this.state)
+      }
+      )
       })
       .catch((err) => {
         console.log(err);
       });
   };
   render() {
-    let restData={...this.state.orderDetails}
+    let restData={...this.state.resData}
+    console.log(restData)
     let items = this.state.itemsArray.map((item) => {
       return (
         <div>
