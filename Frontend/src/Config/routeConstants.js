@@ -68,6 +68,14 @@ module.exports = {
   POST_IMAGE_MENU_ITEM: "/dishImage",
   POST_IMAGE_EVENT: "/eventImage",
 
+  //Messages
+  GET_MESSAGES: '/messages',
+  GET_CUSTOMER_MESSAGES_LIST: '/messagesList',
+  POST_MESSAGES: '/messages',
+  GET_RESTAURANT_MESSAGES_LIST: '/restaurant/messagesList',
+  POST_FIRST_MESSAGE:'/initiateMessage',
+
+
   /**Response status codes */
   RES_UNKNOWN_ERROR: 502,
   RES_BAD_REQUEST: 400,

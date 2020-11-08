@@ -111,7 +111,7 @@ class UserProfile extends Component {
     // console.log(req)
     axios
       .put(
-        `${routeConstants.BACKEND_URL}/image${routeConstants.UPDATE_CUSTOMER_PROFILE}`,
+        `${routeConstants.BACKEND_URL}/customer${routeConstants.UPDATE_CUSTOMER_PROFILE}`,
         req
       )
       .then((res) => {

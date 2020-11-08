@@ -26,12 +26,12 @@ class CustomerReviews extends Component {
     render() {
         let resList = []
         if (this.state.resData.length > 0) {
-            resList = this.state.resData.map((res) => {
+            resList = this.state.resData.map((res,i) => {
                 let obj = {
                     res: res,
                     props: this.props
                 }
-                return <CustomerReviewCard props={obj} />
+                return <CustomerReviewCard keys={i} props={obj} />
 
             })
 

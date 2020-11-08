@@ -125,7 +125,13 @@ class UserNavbar extends Component {
               {" "}
               My Orders
             </a>
-
+            <a
+              className="nav-link"
+              style={{ color: "black" }}
+              href="/customer/messages"
+            >
+              Support
+            </a>
             <a
               className="nav-link"
               style={{ color: "black" }}

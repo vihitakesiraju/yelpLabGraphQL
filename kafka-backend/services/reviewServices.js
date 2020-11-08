@@ -1,94 +1,74 @@
-const customer_data=require('../models/customer_data');
+//const customer_data=require('../models/customer_data');
 const { response } = require("express");
 const route = require('../../Backend/config/routeConstants');
-const login_credentials = require('../models/login_credentials');
+//const login_credentials = require('../models/login_credentials');
 const mongoose = require('mongoose');
+const review_data=require('../models/reviews_data')
+  
 
 function handle_request(msg,callback){
   console.log("in handle request customer");
- if(msg.api===route.POST_CUSTOMER_SIGNUP){
+ if(msg.api===route.GET_REVIEWS_BY_RESTAURANT){
     console.log("Inside Customer Create POST service"+JSON.stringify(msg.body.EMAIL));
-    let logindetails=new login_credentials({
-        email_id: msg.body.EMAIL,
-        user_password: msg.body.PASSWORD,
-        user_type: 1
-    })
-    logindetails.save().then((res)=>{
-        console.log("insidelogindetails")
-        let id=mongoose.Types.ObjectId()
-        let customerdetails=new customer_data({
-        customer_id: id,
-        customer_name: msg.body.NAME,
-        email_id: msg.body.EMAIL,
-        birthday:msg.body.BIRTHDAY,
-        contact_number:msg.body.PHONE,
-        about:msg.body.ABOUT,
-        things_loved:msg.body.THINGS_LOVED,
-        find_me:msg.body.FIND_ME,
-        blog_ref:msg.body.BLOG_REF,
+    review_data.find({ restaurant_id: msg.body.restaurant_id }, (err, result) => {
+        if (err) {
+            console.log('Error occured while fetching Reviews' + err)
+            callback(err, 'Error')
         }
-)
-console.log("customerdetails"+customerdetails)
-customerdetails.save().then((res)=>{
-    callback(null,response)
-}).catch(err=>{
-    login_credentials.findOneAndDelete({email_id:msg.body.EMAIL}).then(
-        callback(err,'Error')
-    )
-})
-    }).catch(err=>{
-        login_credentials.findByIdAndDelete({email_id:msg.body.EMAIL}).then(
-            callback(err,'Error')
-        )
-    })
+        else {
+            console.log('reviews' + result)
+            callback(null, result)
+        }
+    }).populate('customer_id')
     }
  
- else if(msg.api===route.GET_ALL_CUSTOMER_PROFILES){
+ else if(msg.api===route.POST_REVIEW_CUSTOMER){
     console.log("get all customer profiles")
-    customer.find({},
-        (err,result)=>{
-            if(err){
-            callback(err,'Error')
-            }
-            else{
-                callback(null,result)
-            }
-        })
+    let review_id = mongoose.Types.ObjectId();
+
+                let review = new Reviews({
+                    review_id: review_id,
+                    customer_id: msg.body.customer_id,
+                    restaurant_id: msg.body.restaurant_id,
+                    stars: msg.body.stars,
+                    review_date: Date.now(),
+                    review_text: msg.body.review_text
+                })
+
+                review.save().then((result) => {
+                    console.log('Review saved' + result)
+                    callback(null, result)
+                }).catch((err) => {
+                    console.log('Error occured while saving Review' + err)
+                    callback(err, 'Error')
+                })
  }
- else if(msg.api===route.GET_CUSTOMER_PROFILE){
+ else if(msg.api===route.GET_REVIEWS_ID_RESTAURANT){
      console.log("in get cust profile")
-    customer_data.findOne({email_id:msg.body.email_id},
-        (err,result)=>{
-            if(err){
-            callback(err,'Error')
-            }
-            else{
-                callback(null,result)
-            }
-        })
+     console.log("to be edited")
+     review_data.find({ restaurant_id: msg.body.restaurant_id }, (err, result) => {
+        if (err) {
+            console.log('Error occured while fetching Reviews' + err)
+            callback(err, 'Error')
+        }
+        else {
+            console.log('reviews' + result)
+            callback(null, result)
+        }
+    }).populate('customer_id')
  }
- else if(msg.api===route.UPDATE_CUSTOMER_PROFILE){
-     let cust_update={
-        customer_name: msg.body.NAME,
-        birthday:msg.body.BIRTHDAY,
-        contact_number:msg.body.PHONE,
-        about:msg.body.ABOUT,
-        things_loved:msg.body.THINGS_LOVED,
-        find_me:msg.body.FIND_ME,
-        blog_ref:msg.body.BLOG_REF,
-   
-     }
-     customer.findByIdAndUpdate({customer_id:msg.body.customer_id},customer,(err,result)=>{
-        if(err){
-            callback(err,'Error')
-            }
-            else{
-                callback(null,result)
-            }
-     })
-  
- }
+ else if(msg.api===route.GET_REVIEWS_BY_CUSTOMER){
+    review_data.find({ customer_id: msg.body.customer_id }, (err, result) => {
+        if (err) {
+            console.log('Error occured while fetching Reviews' + err)
+            callback(err, 'Error')
+        }
+        else {
+            console.log('reviews' + result)
+            callback(null, result)
+        }
+    }).populate('restaurant_id')
 }
 
-
+}
 exports.handle_request=handle_request;

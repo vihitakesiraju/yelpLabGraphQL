@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./CustomerReviewCard.styles.css";
 import StarRatingComponent from "react-star-rating-component";
-
+import ModalImage from "react-modal-image";
 class CustomerReviewCard extends Component {
   state = {
     redirect: false,
@@ -11,7 +11,23 @@ class CustomerReviewCard extends Component {
     const restData = { ...this.props.props.res };
     console.log(restData);
     let renderItem;
+    let imageList
     if (restData) {
+      console.log(restData.images.length)
+            if (restData.images.length > 0) {
+                imageList = restData.images.map((img, i) => {
+                    return <ModalImage
+                        small={img}
+                        large={img}
+                        alt="Review Image"
+                        key={i}
+                        hideDownload={true}
+                        className="imageDisplay"
+                    />;
+                })
+            }
+
+
       renderItem = (
         <div className="reviewCard">
           <div className="reviewHeader">
@@ -27,7 +43,9 @@ class CustomerReviewCard extends Component {
               />
             </h3>
           </div>
-          <h4>{restData.restaurant_name}</h4>
+          <div className="imageList">
+                    {imageList}
+                </div>
           <p>{restData.review_text}</p>
         </div>
       );

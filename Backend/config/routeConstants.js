@@ -1,5 +1,6 @@
 module.exports = {
   FRONTEND_URL: "http://localhost:3000",
+  BACKEND_URL: "http://localhost:3001",
 
   //CustomerRoutes
   GET_CUSTOMER_PROFILE: "/profile",
@@ -67,6 +68,14 @@ module.exports = {
 
   GET_REGISTRATIONS_CUSTOMER: "/customerRegistrations",
   GET_REGISTRATIONS_EVENT: "/eventRegistrations",
+
+
+  //messages
+  GET_MESSAGES: '/messages',
+  GET_CUSTOMER_MESSAGES_LIST: '/messagesList',
+  POST_MESSAGES: '/messages',
+  GET_RESTAURANT_MESSAGES_LIST: '/restaurant/messagesList',
+  POST_FIRST_MESSAGE:'/initiateMessage',
 
   /**Response status codes */
   RES_UNKNOWN_ERROR: 502,

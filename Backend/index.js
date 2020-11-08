@@ -25,6 +25,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const eventRoutes = require("./routes/eventRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const imageRoutes = require("./routes/imageRoutes");
+const messagesRoutes = require("./routes/messagesRoutes");
 
 //use express session to maintain session data
 app.use(
@@ -69,6 +70,7 @@ app.use("/reviews", reviewRoutes);
 app.use("/images", imageRoutes);
 
 app.use("/events", eventRoutes);
+app.use("/messages",messagesRoutes)
 
 //start your server on port 3001
 app.listen(3001);

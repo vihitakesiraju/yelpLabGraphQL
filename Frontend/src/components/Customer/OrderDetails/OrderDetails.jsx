@@ -31,22 +31,22 @@ class OrderDetails extends Component {
     let renderVar;
     //if (restData) {
     if(this.state.loaded){
-      let restData={...this.state}
-
-      restData={...restData,...this.state.OrderDetails}
+      let restData={...this.state,...this.state.restaurant_id}
+      restData = { ...restData, ...this.state.orderDetails }
+     
       console.log(restData)
       renderVar = (
         <div className="restCardOrders">
           <h4>OrderDetails {localStorage.getItem("order_id")}</h4>
 
-          <h5>Restaurant Name: {restData.restaurant_id.restaurant_name}</h5>
-          <h5>Address:{restData.restaurant_id.restaurant_address}</h5>
-          <h5>City:{restData.restaurant_id.address_city}</h5>
+          <h5>Restaurant Name: {restData.restaurant_name}</h5>
+          <h5>Address:{restData.restaurant_address}</h5>
+          <h5>City:{restData.address_city}</h5>
 
           <h5>
-            Phone Numbers:{restData.restaurant_id.primary_phone},{restData.restaurant_id.secondary_phone}
+            Phone Numbers:{restData.primary_phone},{restData.secondary_phone}
           </h5>
-          <h5>Email:{restData.restaurant_id.email}</h5>
+          <h5>Email:{restData.email}</h5>
 
           <h5>Order Type:{restData.order_type}</h5>
 

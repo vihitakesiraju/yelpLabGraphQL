@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 
 import { Redirect } from "react-router-dom";
 import {connect} from 'react-redux'
-import {setOrderID} from '../../../../reduxConfig/CommonActions'
+import {setOrderID,setCustomerID} from '../../../../reduxConfig/CommonActions'
 class RestaurantOrdersCard extends Component {
     state = {
         redirect: false,
@@ -24,6 +24,8 @@ class RestaurantOrdersCard extends Component {
     handleClick = () => {
         console.log(this.props);
         this.props.setOrderID({ order_id: this.props.props.res.order_id })
+        
+        this.props.setCustomerID({ customer_id: this.props.props.res.customer_id })
         this.props.history.push('/restaurant/orderDetails')
     }
     render() {
@@ -78,8 +80,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setOrderID: (order_id) => dispatch(setOrderID(order_id))
+        setOrderID: (order_id) => dispatch(setOrderID(order_id)),
 
+        setCustomerID: (customer_id) => dispatch(setCustomerID(customer_id))
     }
 }
 

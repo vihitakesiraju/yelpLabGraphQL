@@ -42,5 +42,7 @@ module.exports = {
   SET_REST_ID: "setRestID",
   SET_CUST_ID: "setCustID",
   SET_EMAIL_ID: "setEmailID",
+  SET_CONVERSATION_ID: "setConversationID"
+
 
 }

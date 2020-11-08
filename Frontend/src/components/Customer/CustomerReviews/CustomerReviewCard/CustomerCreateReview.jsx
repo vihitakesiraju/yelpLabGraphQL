@@ -4,10 +4,13 @@ import StarRatingComponent from 'react-star-rating-component';
 import Axios from 'axios'
 import cookie from 'react-cookies'
 import routeConstants from '../../../../Config/routeConstants'
+import { connect } from 'react-redux'
+
+
 class CustomerReviewCard extends Component {
     state = {
         stars: 0,
-        review_text: ""
+        review_text: "",
 
     }
 
@@ -36,15 +39,45 @@ class CustomerReviewCard extends Component {
         const { value, name } = e.target;
         this.setState({ [name]: value });
     }
+    onChangeHandler = event => {
+        this.setState({
+            selectedFile: event.target.files,
+        })
+    }
+    onClickHandler = (e) => {
+        e.preventDefault()
+        const data = new FormData()
+        for (let x = 0; x < this.state.selectedFile.length; x++) {
+            data.append('file', this.state.selectedFile[x])
+        }
+        data.append('stars', this.state.stars)
+        data.append('review_text', this.state.review_text)
+        data.append('customer_id', this.props.customer_id)
+        data.append('restaurant_id', this.props.restaurant_id)
+        Axios.post(`${routeConstants.BACKEND_URL}/images${routeConstants.POST_IMAGES_REVIEW}`, data)
+            .then(res => { // then print response status
+                console.log(res.statusText)
+                window.location.reload(false);
+
+            }).catch((err) => {
+                window.alert("Unable to post")
+                console.log(err)
+
+            })
+
+    }
 
     render() {
 
 
         return (<div>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.onClickHandler} enctype="multipart/form-data">
                 <div className="reviewCard2">
                     <h5>Post a review</h5>
-
+                    <div class="form-group">
+                        <label for="example-input-file"> </label>
+                        <input type="file" class="form-control" multiple onChange={this.onChangeHandler} />
+                    </div>
                     Rating:
                     <h2><StarRatingComponent
                         name="rating"
@@ -59,8 +92,9 @@ class CustomerReviewCard extends Component {
                <textarea type='text' className="form-control" name="review_text" value={this.state.review_text} onChange={this.inputChangeHandler} />
                     </div>
                     <div>
-                        <button type="submit" onClick={this.handleSubmit} className="btn btn-danger mt-3">Post Review</button>
+                        <button type="submit" className="btn btn-danger mt-3">Post Review</button>
                     </div>
+
                 </div>
             </form>
         </div>
@@ -68,4 +102,18 @@ class CustomerReviewCard extends Component {
     }
 }
 
-export default CustomerReviewCard;
+const mapStateToProps = (state) => {
+    return {
+        restaurant_id: state.restaurant_id,
+        customer_id: state.customer_id,
+        jwtToken: state.jwtToken
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomerReviewCard);

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import routeConstants from "../../../../Config/routeConstants";
 import {connect} from 'react-redux'
+import { setCustomerID,setConversationID} from '../../../../reduxConfig/CommonActions'
 class RestaurantOrderDetails extends Component {
   state = {
     resData: {},
@@ -32,6 +33,19 @@ class RestaurantOrderDetails extends Component {
         window.alert("Unable to update Status");
       });
   };
+  handleContact = (e) => {
+    //this.props.setCustomerID({ customer_id: this.state.resData.customer_id })
+    console.log(this.props)
+    Axios.post(`${routeConstants.BACKEND_URL}/messages${routeConstants.POST_FIRST_MESSAGE}`, {
+        customer_id: this.props.customer_id,
+        restaurant_id: this.props.restaurant_id
+    })
+    .then((res) => {
+      // console.log(res.data._id)
+      this.props.setConversationID({ conversation_id: res.data._id })
+      this.props.history.push('/restaurant/messages/conversation')
+  })
+}
   componentDidMount = () => {
     Axios.get(
       `${routeConstants.BACKEND_URL}/orders${routeConstants.GET_ORDER_BY_ID}`,
@@ -122,6 +136,7 @@ class RestaurantOrderDetails extends Component {
           <Link to="/restaurant/orders">
             <button className="btn btn-danger">Back to Orders</button>
           </Link>
+          <button className="btn btn-danger " onClick={this.handleContact} >Contact Customer</button>
         </div>
       </div>
     );
@@ -139,8 +154,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      // setOrderID: (order_id) => dispatch(setOrderID(order_id))
-
+    setCustomerID: (customer_id) => dispatch(setCustomerID(customer_id)),
+    //setCustomerID: (customer_id) => dispatch(setCustomerID(customer_id)),
+    setConversationID: (conversation_id) => dispatch(setConversationID(conversation_id))
   }
 }
 

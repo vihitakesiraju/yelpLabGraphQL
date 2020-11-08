@@ -80,6 +80,13 @@ class RestaurantNavbar extends Component {
             <a
               className="nav-link"
               style={{ color: "black" }}
+              href="/restaurant/messages"
+            >
+              Support
+            </a>
+            <a
+              className="nav-link"
+              style={{ color: "black" }}
               href="/restaurant/profile"
             >
               My Details

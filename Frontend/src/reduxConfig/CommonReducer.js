@@ -77,6 +77,15 @@ const Common = (state = initialState, action) => {
                             }
                             );
                         }
+            case actionTypes.SET_CONVERSATION_ID:
+                            {
+                                console.log("setting conversation_id")
+                                return Object.assign({},
+                                    state, {
+                                    conversation_id: action.payload.conversation_id,
+                                }
+                                );
+                            }
         default:
             return state;
     }
