@@ -86,6 +86,39 @@ const Common = (state = initialState, action) => {
                                 }
                                 );
                             }
+                            case actionTypes.SET_EVENTS_LIST:
+                                {
+                                    return {
+                                        ...state,
+                                        eventsList: [...action.payload.eventsList],
+                                    }
+                    
+                                }
+                            case actionTypes.SET_ORDERS_LIST:
+                                {
+                                    return {
+                                        ...state,
+                                        ordersList: [...action.payload.ordersList],
+                                    }
+                    
+                                }
+                            case actionTypes.SET_PAGINATED_EVENTS_LIST:
+                                {
+                                    // console.log(action.payload)
+                                    return {
+                                        ...state,
+                                        paginatedEvents: [...action.payload.paginatedEvents],
+                                    }
+                    
+                                }
+                            case actionTypes.SET_PAGINATED_ORDERS_LIST:
+                                {
+                                    return {
+                                        ...state,
+                                        paginatedOrders: [...action.payload.paginatedOrders],
+                                    }
+                    
+                                }
         default:
             return state;
     }

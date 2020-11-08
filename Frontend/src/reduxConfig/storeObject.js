@@ -14,6 +14,10 @@ export const initialState = {
   cust_id: "",
   email_id:"",
   order_id: "",
+  ordersList: [],
+    eventsList: [],
+    paginatedOrders: [],
+    paginatedEvents: [],
   login: {
       email_id: "",
       password: "",

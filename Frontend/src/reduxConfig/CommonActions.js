@@ -60,3 +60,39 @@ export const setConversationID = (payload) => {
     
     }
 }
+export const setEventsList = (payload) => {
+    // console.log(payload)
+    return {
+        type: actionTypes.SET_EVENTS_LIST,
+        payload: payload
+    }
+}
+export const setOrdersList = (payload) => {
+    // console.log(payload)
+    return {
+        type: actionTypes.SET_ORDERS_LIST,
+        payload: payload
+    }
+}
+export const setPaginatedEventsList = (payload) => {
+    // console.log(payload)
+    return {
+        type: actionTypes.SET_PAGINATED_EVENTS_LIST,
+        payload: payload
+    }
+}
+export const setPaginatedOrders = (payload) => {
+    // console.log(payload)
+    return {
+        type: actionTypes.SET_PAGINATED_ORDERS_LIST,
+        payload: payload
+    }
+}
+
+export const setPaginatedOrdersList = (payload) => {
+    // console.log(payload)
+    return {
+        type: actionTypes.SET_PAGINATED_ORDERS_LIST,
+        payload: payload
+    }
+}

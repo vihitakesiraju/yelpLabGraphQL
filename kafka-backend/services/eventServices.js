@@ -111,33 +111,22 @@ else if(msg.api===route.POST_EVENT){
     )
       }
       
-      
-      
-     
-
-    //   con.query(
-    //     `
-    //     SELECT e.event_id, event_name, event_description, event_date,
-    //     event_time, event_creator_id, event_latitude, r.email,
-    // event_longitude,
-    //      event_hashtags, restaurant_name,restaurant_address
-    //  FROM events e
-    //  INNER JOIN restaurant_data  r ON e.event_creator_id=r.restaurant_id
-    //  WHERE e.event_date>curdate()  AND  r.email="${req.query.email_id}"   ORDER BY event_date DESC; 
-    //         `, 
-      
-      
-    //   login_model.findOne({
-    //     email_id: user_name,
-    //   },function(err,result){
-    //     console.log("result"+result)
-    //     if(err){
-    //       callback(err,"error");
-    //     }
-    //     if(result.user_password === user_password){
-    //       callback(null,result);
-    //     }
-    //   })
+      else if(msg.api===route.GET_EVENT_BY_RESTAURANT){
+        console.log("Inside Events GET by restaurantID service");  
+        
+        event_model.find({ event_creator_id: msg.body.restaurant_id }).sort('-event_date').populate('event_id').exec(
+          (err, result) => {
+              if (err) {
+                  console.log('Error occured while fetching Registrations' + err)
+                  callback(err, 'Error')
+              }
+              else {
+                  console.log('Registrations fetched' + result)
+                  callback(null, result)
+              }
+          }
+      )
+        } 
 
     
     else if(msg.api===route.GET_REGISTRATIONS_CUSTOMER){

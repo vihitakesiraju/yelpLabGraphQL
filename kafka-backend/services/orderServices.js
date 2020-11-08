@@ -111,7 +111,26 @@ function handle_request(msg,callback){
     }
     else if(msg.api===route.GET_ORDER_BY_CUSTOMER){
       //let customerid=customer_data.findOne({email_id:msg.body.email_id})
-      order_data.find({ customer_id: msg.body.customer_id }, (err, result) => {
+      order_data.find({ customer_id: msg.body.customer_id }).sort('-order_date').exec(
+        (err, result) => {
+            if (err) {
+                console.log('Error occured while fetching Orders' + err)
+                callback(err, 'Error')
+            }
+            else {
+                console.log('Orders fetched' + result)
+                callback(null, result)
+            }
+        })
+ 
+  }
+    
+else if(msg.api===route.GET_ORDER_BY_RESTAURANT){
+
+  console.log("Inside get order by restaurant");
+  console.log(msg.body)
+  order_data.find({ restaurant_id: msg.body.restaurant_id }).sort('-order_date').exec(
+    (err, result) => {
         if (err) {
             console.log('Error occured while fetching Orders' + err)
             callback(err, 'Error')
@@ -121,22 +140,6 @@ function handle_request(msg,callback){
             callback(null, result)
         }
     })
-  }
-    
-else if(msg.api===route.GET_ORDER_BY_RESTAURANT){
-
-  console.log("Inside get order by restaurant");
-  console.log(msg.body)
-  order_data.find({ restaurant_id: msg.body.restaurant_id }, (err, result) => {
-    if (err) {
-        console.log('Error occured while fetching Orders' + err)
-        callback(err, 'Error')
-    }
-    else {
-        console.log('Orders fetched' + result)
-        callback(null, result)
-    }
-})
   
     }
 

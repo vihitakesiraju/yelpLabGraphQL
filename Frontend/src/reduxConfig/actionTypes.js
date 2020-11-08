@@ -42,7 +42,11 @@ module.exports = {
   SET_REST_ID: "setRestID",
   SET_CUST_ID: "setCustID",
   SET_EMAIL_ID: "setEmailID",
-  SET_CONVERSATION_ID: "setConversationID"
+  SET_CONVERSATION_ID: "setConversationID",
+  SET_EVENTS_LIST: "setEventsList",
+    SET_ORDERS_LIST: "setOrdersList",
+    SET_PAGINATED_EVENTS_LIST: "setPaginatedEventsList",
+    SET_PAGINATED_ORDERS_LIST: "setPaginatedOrdersList",
 
 
 }
