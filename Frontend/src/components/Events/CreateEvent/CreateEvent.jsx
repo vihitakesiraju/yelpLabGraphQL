@@ -17,7 +17,10 @@ class CreateEvent extends Component {
     event_longitude: "",
     event_hashtags: "",
   };
-
+  inputChangeHandler = (e) => {
+    const { value, name } = e.target;
+    this.setState({ [name]: value });
+}
   onChangeHandler = event => {
     this.setState({
         selectedFile: event.target.files,
@@ -38,7 +41,7 @@ onClickHandler = (e) => {
     data.append("event_latitude", this.state.event_latitude)
     data.append("event_longitude", this.state.event_longitude)
     data.append("event_hashtags", this.state.event_hashtags)
-    Axios.defaults.headers.common['Authorization'] = this.props.jwtToken;
+    //Axios.defaults.headers.common['Authorization'] = this.props.jwtToken;
 
     Axios.post(`${routeConstants.BACKEND_URL}/events${routeConstants.POST_EVENT}`, data)
         .then(res => { // then print response status
