@@ -6,7 +6,7 @@ var app = express();
 var bodyParser = require("body-parser");
 var session = require("express-session");
 var cookieParser = require("cookie-parser");
-const connecttodb = require("./dbConnections/mongoose");
+//const connecttodb = require("./dbConnections/mongoose");
 var cors = require("cors");
 app.set("view engine", "ejs");
 const path = require("path");
