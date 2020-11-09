@@ -102,6 +102,7 @@ class UserProfile extends Component {
   };
   handleSave = (e) => {
     e.preventDefault();
+    console.log(this.state)
     const { disabled, editstate, oldDetails, ...userDetails } = this.state;
 
     const req = {
@@ -149,7 +150,7 @@ class UserProfile extends Component {
         formData
       )
       .then((response) => {
-        window.location.reload(false);
+        this.setState({ image_path: response.data });
       });
   };
 

@@ -17,6 +17,9 @@ const {
   POST_MENU_ITEM,
 } = require("../config/routeConstants");
 var kafka = require('../kafka/client');
+var passport = require('passport');
+
+const { checkAuth } = require("../config/passport");
 module.exports.createRestaurant = (req, res) => {
   console.log("Inside Restaurant Create POST service");
   console.log("req body" + JSON.stringify(req.body));

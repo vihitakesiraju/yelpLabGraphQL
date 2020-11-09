@@ -1,3 +1,4 @@
+const { response } = require("express");
 const con = require("../config/dbConnection");
 const {
   CONTENT_TYPE,
@@ -8,194 +9,168 @@ const {
   RES_DUPLICATE_RESOURCE,
   TEXT_PLAIN,
   RES_INTERNAL_SERVER_ERROR,
+  
+  POST_IMAGE_USER_PROFILE,
 } = require("../config/routeConstants");
+var kafka = require('../kafka/client');
 
-const multer = require("multer");
 
-// module.exports.getProfileImage = (req, res) => {
-//     console.log("Inside Image GET profile service");
-//     console.log("req params" + JSON.stringify(req.query));
-
-//     const { fileid } = req.params;
-//     res.sendFile(+ '/data/' + fileid);
-//     con.query(`SELECT image_path FROM customer_primary_data c1 INNER JOIN customer_secondary_data c2 ON c1.customer_id=c2.customer_id WHERE c1.email_id="${req.query.email_id}"`, (error, result) => {
-//         if (error) {
-//             console.log(error);
-//             //res.setHeader(CONTENT_TYPE, APP_JSON);
-//             con.rollback();
-//             res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(error));
-//         }
-//         else {
-//             console.log(JSON.stringify(result));
-//             //res.setHeader(CONTENT_TYPE, APP_JSON);
-//             res.status(RES_SUCCESS).end(JSON.stringify(result));
-//         }
-//     });
-
-// }
-
-module.exports.uploadUserProfile = async (req, res) => {
-  console.log("Inside image POST profile service");
-  let email_id;
-  let filename = `Profile_${Date.now()}.jpg`;
-  let pathname = "/imageData/UserProfiles/";
-
-  try {
-    const storage = multer.diskStorage({
-      destination(req, file, cb) {
-        cb(null, "./imageData/UserProfiles/");
-      },
-      filename(req, file, cb) {
-        console.log(req.body);
-        cb(null, `${filename}`);
-      },
-    });
-
-    const upload = multer({
-      storage,
-    }).single("file");
-
-    await upload(req, res, (err) => {
-      // email_id = req.body.email_id
-      // filename = `${email_id}_${Date.now()}.jpg`;
-      // console.log(filename)
-      if (err instanceof multer.MulterError) {
-        return res.status(500);
-      }
-      if (err) {
-        return res.status(500);
-      }
-      con.query(
-        `
-            INSERT INTO profile_images(user_email,image_path) VALUES ("${req.body.email_id}","${pathname}${filename}")
-     `,
-        (error, result) => {
-          if (error) {
-            console.log(error);
-            //res.setHeader(CONTENT_TYPE, APP_JSON);
-            con.rollback();
-            res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(error));
-          } else {
-            console.log(JSON.stringify(result));
-            //res.setHeader(CONTENT_TYPE, APP_JSON);
-            res.status(RES_SUCCESS).end(JSON.stringify(result));
-          }
-        }
-      );
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(error));
+module.exports.uploadUserProfile = (req, res) => {
+  console.log("Inside customer picture service");
+  console.log(req.body);
+  data={
+    api:POST_IMAGE_USER_PROFILE,
+    body: req.body
   }
+  kafka.make_request('image_data', data, function(err,results){
+    console.log('in result');
+    console.log(results);
+    if (err){
+        console.log("Inside err");
+        res.json({
+            status:"error",
+            msg:"System Error, Try Again."
+        })
+    }else{
+        console.log("Inside else");
+        console.log(results)
+            res.json(results);
+
+            res.end();
+        }
+    
+});
 };
 
-module.exports.uploadMenuItem = async (req, res) => {
-  console.log("Inside image POST Dish Item service");
-  let email_id;
-  let filename = `Dish_${Date.now()}.jpg`;
-  let pathname = "/imageData/Dishes/";
+ module.exports.uploadMenuItem = (req, res) => {
+  console.log("Inside Events POST registration service");
+  console.log(req.body);
+//   data={
+//     api:POST_EVENT_REGISTRATION,
+//     body: req.body
+//   }
+//   kafka.make_request('event_data', data, function(err,results){
+//     console.log('in result');
+//     console.log(results);
+//     if (err){
+//         console.log("Inside err");
+//         res.json({
+//             status:"error",
+//             msg:"System Error, Try Again."
+//         })
+//     }else{
+//         console.log("Inside else");
+//         console.log(results)
+//             res.json(results);
 
-  try {
-    const storage = multer.diskStorage({
-      destination(req, file, cb) {
-        cb(null, "./imageData/Dishes/");
-      },
-      filename(req, file, cb) {
-        console.log(req.body);
-        cb(null, `${filename}`);
-      },
-    });
+//             res.end();
+//         }
+    
+// });
+ };
+ module.exports.uploadEvent = (req, res) => {
+   console.log("Inside Events POST create service");
+  console.log(req.body)
+//   data={
+//     api:POST_EVENT,
+//     body: req.body
+//   }
+//   kafka.make_request('event_data', data, function(err,results){
+//     console.log('in result');
+//     console.log(results);
+//     if (err){
+//         console.log("Inside err");
+//         res.json({
+//             status:"error",
+//             msg:"System Error, Try Again."
+//         })
+//     }else{
+//         console.log("Inside else");
+//         console.log(results)
+//             res.json(results);
 
-    const upload = multer({
-      storage,
-    }).single("file");
+//             res.end();
+//         }
+    
+// });
+ };
 
-    await upload(req, res, (err) => {
-      // email_id = req.body.email_id
-      // filename = `${email_id}_${Date.now()}.jpg`;
-      // console.log(filename)
-      if (err instanceof multer.MulterError) {
-        return res.status(500);
-      }
-      if (err) {
-        return res.status(500);
-      }
-      console.log(`${pathname}${filename}`);
-      res.status(RES_SUCCESS).end(`${pathname}${filename}`);
-      //         con.query(`
-      //         INSERT INTO profile_images(user_email,image_path) VALUES ("${req.body.email_id}","${pathname}${filename}")
-      //  `, (error, result) => {
-      //             if (error) {
-      //                 console.log(error);
-      //                 //res.setHeader(CONTENT_TYPE, APP_JSON);
-      //                 con.rollback();
-      //                 res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(error));
-      //             }
-      //             else {
-      //                 console.log(JSON.stringify(result));
-      //                 //res.setHeader(CONTENT_TYPE, APP_JSON);
-      //                 res.status(RES_SUCCESS).end(JSON.stringify(result));
-      //             }
-      //         });
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(error));
-  }
+ module.exports.getEventsByRestaurantID = (req, res) => {
+  console.log("Inside Events GET by restaurantID service");
+
+//   data={
+//     api:GET_REGISTRATIONS_EVENT,
+//     body: req.query
+//   }
+//   kafka.make_request('event_data', data, function(err,results){
+//     console.log('in result');
+//     console.log(results);
+//     if (err){
+//         console.log("Inside err");
+//         res.json({
+//             status:"error",
+//             msg:"System Error, Try Again."
+//         })
+//     }else{
+//         console.log("Inside else");
+//         console.log(results)
+//             res.json(results);
+
+//             res.end();
+//         }
+    
+// });
 };
+ module.exports.getRegistrationsByCustomerID = (req, res) => {
+   console.log("Inside Events GET registrations by customer service");
+ console.log(req.query);
+//   data={
+//     api:GET_REGISTRATIONS_CUSTOMER,
+//     body: req.query
+//   }
+//   kafka.make_request('event_data', data, function(err,results){
+//     console.log('in result');
+//     console.log(results);
+//     if (err){
+//         console.log("Inside err");
+//         res.json({
+//             status:"error",
+//             msg:"System Error, Try Again."
+//         })
+//     }else{
+//         console.log("Inside else");
+//         console.log(results)
+//             res.json(results);
 
-module.exports.uploadEvent = async (req, res) => {
-  console.log("Inside image POST Event Item service");
-  let email_id;
-  let filename = `Dish_${Date.now()}.jpg`;
-  let pathname = "/imageData/Events/";
-  try {
-    const storage = multer.diskStorage({
-      destination(req, file, cb) {
-        cb(null, "./imageData/Events/");
-      },
-      filename(req, file, cb) {
-        console.log(req.body);
-        cb(null, `${filename}`);
-      },
-    });
+//             res.end();
+//         }
+    
+// });
+ };
 
-    const upload = multer({
-      storage,
-    }).single("file");
+ module.exports.getRegistrationsByEventId = (req, res) => {
+   console.log("Inside Events GET registrations by eventid service");
+  console.log(req.query);
+//   data={
+//     api:GET_REGISTRATIONS_EVENT,
+//     body: req.query
+//   }
+//   kafka.make_request('event_data', data, function(err,results){
+//     console.log('in result');
+//     console.log(results);
+//     if (err){
+//         console.log("Inside err");
+//         res.json({
+//             status:"error",
+//             msg:"System Error, Try Again."
+//         })
+//     }else{
+//         console.log("Inside else");
+//         console.log(results)
+//             res.json(results);
 
-    await upload(req, res, (err) => {
-      event_id = req.body.event_id;
-      // filename = `${event_id}_${Date.now()}.jpg`;
-      console.log(filename);
-      if (err instanceof multer.MulterError) {
-        return res.status(500);
-      }
-      if (err) {
-        return res.status(500);
-      }
-      console.log(`${pathname}${filename}`);
-      res.status(RES_SUCCESS).end(`${pathname}${filename}`);
-      con.query(
-        `
-                    INSERT INTO event_images(event_id,image_url) VALUES ("${req.body.event_id}","${pathname}${filename}")
-             `,
-        (error, result) => {
-          if (error) {
-            console.log(error);
-            //res.setHeader(CONTENT_TYPE, APP_JSON);
-            con.rollback();
-            res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(error));
-          } else {
-            console.log(JSON.stringify(result));
-            //res.setHeader(CONTENT_TYPE, APP_JSON);
-            res.status(RES_SUCCESS).end(JSON.stringify(result));
-          }
-        }
-      );
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(error));
-  }
+//             res.end();
+//         }
+    
+// });
 };

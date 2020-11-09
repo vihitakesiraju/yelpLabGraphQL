@@ -74,15 +74,20 @@ class Menu extends Component {
         <div className="menuCheckout1">
           <div className="menuListFlex">
             {/* {dishes} */}
-            <h5>Appetizers</h5>
+            <h3 class="card-title font-weight-bold">Appetizers</h3>
+      
             <div className="menuList11">{appetizers}</div>
-            <h5>Salads</h5>
+            <h3 class="card-title font-weight-bold">Salads</h3>
+         
             <div className="menuList11">{salads}</div>
-            <h5>Mains</h5>
+            <h3 class="card-title font-weight-bold">Mains</h3>
+           
             <div className="menuList11">{mains}</div>
-            <h5>Desserts</h5>
+            <h3 class="card-title font-weight-bold">Desserts</h3>
+ 
             <div className="menuList11">{desserts}</div>
-            <h5>Beverages</h5>
+            <h3 class="card-title font-weight-bold">Beverages</h3>
+         
             <div className="menuList11">{beverages}</div>
           </div>
           <Checkout props={this.props} />

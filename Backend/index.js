@@ -10,6 +10,13 @@ const connecttodb = require("./dbConnections/mongoose");
 var cors = require("cors");
 app.set("view engine", "ejs");
 const path = require("path");
+let mongo = require('../kafka-backend/config/config')
+
+
+
+var passport = require('passport');
+var jwt = require('jwt-simple');
+app.use(passport.initialize());
 app.use(cors({ origin: `${routeConstants.FRONTEND_URL}`, credentials: true }));
 // const formidable = require('express-formidable');
 // app.use(formidable());

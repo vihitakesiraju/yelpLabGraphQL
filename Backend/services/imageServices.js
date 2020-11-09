@@ -65,23 +65,24 @@ module.exports.uploadUserProfile = async (req, res) => {
       if (err) {
         return res.status(500);
       }
-      con.query(
-        `
-            INSERT INTO profile_images(user_email,image_path) VALUES ("${req.body.email_id}","${pathname}${filename}")
-     `,
-        (error, result) => {
-          if (error) {
-            console.log(error);
-            //res.setHeader(CONTENT_TYPE, APP_JSON);
-            con.rollback();
-            res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(error));
-          } else {
-            console.log(JSON.stringify(result));
-            //res.setHeader(CONTENT_TYPE, APP_JSON);
-            res.status(RES_SUCCESS).end(JSON.stringify(result));
-          }
-        }
-      );
+      res.status(RES_SUCCESS).end(`${pathname}${filename}`);
+    //   con.query(
+    //     `
+    //         INSERT INTO profile_images(user_email,image_path) VALUES ("${req.body.email_id}","${pathname}${filename}")
+    //  `,
+    //     (error, result) => {
+    //       if (error) {
+    //         console.log(error);
+    //         //res.setHeader(CONTENT_TYPE, APP_JSON);
+    //         con.rollback();
+    //         res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(error));
+    //       } else {
+    //         console.log(JSON.stringify(result));
+    //         //res.setHeader(CONTENT_TYPE, APP_JSON);
+    //         res.status(RES_SUCCESS).end(JSON.stringify(result));
+    //       }
+    //     }
+    //   );
     });
   } catch (error) {
     console.log(error);
@@ -122,21 +123,6 @@ module.exports.uploadMenuItem = async (req, res) => {
       }
       console.log(`${pathname}${filename}`);
       res.status(RES_SUCCESS).end(`${pathname}${filename}`);
-      //         con.query(`
-      //         INSERT INTO profile_images(user_email,image_path) VALUES ("${req.body.email_id}","${pathname}${filename}")
-      //  `, (error, result) => {
-      //             if (error) {
-      //                 console.log(error);
-      //                 //res.setHeader(CONTENT_TYPE, APP_JSON);
-      //                 con.rollback();
-      //                 res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(error));
-      //             }
-      //             else {
-      //                 console.log(JSON.stringify(result));
-      //                 //res.setHeader(CONTENT_TYPE, APP_JSON);
-      //                 res.status(RES_SUCCESS).end(JSON.stringify(result));
-      //             }
-      //         });
     });
   } catch (error) {
     console.log(error);

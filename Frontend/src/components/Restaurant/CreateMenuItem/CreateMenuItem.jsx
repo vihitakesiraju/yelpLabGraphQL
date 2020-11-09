@@ -11,7 +11,7 @@ class CreateMenuItem extends Component {
     ingredients: "",
     menu_id: 0,
     price: 0,
-    //email: cookie.load("email"),
+    email: cookie.load("email"),
     restaurant_id:this.props.restaurant_id
   };
   inputChangeHandler = (e) => {
@@ -83,6 +83,7 @@ class CreateMenuItem extends Component {
   };
 
   onFileChange = (event) => {
+    console.log(event.target.files)
     this.setState({ selectedFile: event.target.files[0] });
     if (this.state.selectedFile) {
       this.setState({ app: this.state.selectedFile.name });

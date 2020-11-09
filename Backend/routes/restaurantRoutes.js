@@ -1,7 +1,8 @@
 const express = require("express");
 const restaurantRouter = express.Router();
 const restaurantServices = require("../kafkaservices/restaurantServices");
-
+const { checkAuth } = require("../config/passport");
+var passport = require('passport');
 const {
   UPDATE_RESTAURANT_PROFILE,
   POST_RESTAURANT_SIGNUP,

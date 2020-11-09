@@ -13,6 +13,7 @@ import {
 } from "../../../reduxConfig/LoginActions";
 import loginImage from "../../../Assets/BackgroundImages/yelp-1-logo.png";
 import "./Login.styles.css";
+import jwt_decode from 'jwt-decode';
 //Define a Login Component
 class Login extends Component {
   state = {
@@ -45,58 +46,7 @@ class Login extends Component {
     this.props.authFlagHandler(true);
   };
 
-  //submit Login handler to send a request to the node backend
-  // submitLogin = (e) => {
-  //     var headers = new Headers();
-  //     console.log(this.state);
-  //     //prevent page from refresh
-  //     e.preventDefault();
-  //     const data = {
-  //         username: this.state.username,
-  //         password: this.state.password
-  //     }
-  //     let user_type;
-  //     //set the with credentials to true
-  //     axios.defaults.withCredentials = true;
-  //     //make a post request with the user data
-  //     axios.post(`${RouteConstants.BACKEND_URL}${POST_LOGIN}`, data)
-  //         .then(response => {
-  //             console.log("Status Code : ", response.status);
-  //             if (response.status === 200) {
-  //                 console.log(response.data);
-  //                 user_type = response.data.user_type;
-  //                 this.setState({
-  //                     authFlag: true
-  //                 }, () => {
-  //                     cookie.save("email", response.data.email_id, {
-  //                         path: '/'
-  //                     });
-  //                     console.log("Updated state");
-  //                     if (user_type === "1") {
-  //                         console.log("cust redirect");
-  //                         cookie.save('cookie');
-  //                         this.props.history.push('/customer/home');
-  //                     }
-  //                     else if (user_type === "2") {
-  //                         console.log("rest redirect");
-  //                         cookie.save('cookie');
-  //                         this.props.history.push('/restaurant/home');
-  //                     }
-  //                 })
-
-  //             } else {
-  //                 this.setState({
-  //                     authFlag: false
-  //                 })
-  //             }
-  //         }).catch((err) => {
-  //             console.log(err);
-  //             this.setState({
-  //                 loginStatus: "Login Failed"
-  //             });
-  //             //window.alert("Login Failed");
-  //         });
-  // }
+  
 
   submitLogin = (e) => {
     // var headers = new Headers();
@@ -116,48 +66,53 @@ class Login extends Component {
       .then((response) => {
         console.log("Status Code : ", response.status);
         if (response.status === 200) {
-          console.log(response.data);
-          user_type = response.data.cred.user_type;
+          console.log(response.data.data.cred);
+          user_type = response.data.data.cred.user_type;
+          //console.log("user_type")
+          console.log(user_type)
+          var decoded = jwt_decode(response.data.token.split(' ')[1]);
           this.setState(
             {
               authFlag: true,
             },
             () => {
-              cookie.save("email", response.data.cred.email_id, {
+              cookie.save("email", response.data.data.cred.email_id, {
                 path: "/",
               });
-              cookie.save("user_type", response.data.cred.user_type, {
+              cookie.save("user_type", response.data.data.cred.user_type, {
                 path: "/",
               });
               console.log("Updated state");
               console.log(this.state.username)
-              if (response.data.cred.user_type === 1) {
+              if (response.data.data.cred.user_type === 1) {
                 console.log("cust redirect");
                 cookie.save("cookie");
                 this.props.login({
-                  customer_id: response.data.cred._id,
-                  user_type: response.data.cred.user_type,
-                  login_id: response.data.customer._id,
-                  cust_id:response.data.customer.customer_id,
-                  email_id:response.data.cred.email_id
+                  customer_id: response.data.data.cred._id,
+                  user_type: response.data.data.cred.user_type,
+                  login_id: response.data.data.customer._id,
+                  cust_id:response.data.data.customer.customer_id,
+                  email_id:response.data.data.cred.email_id,
+                  jwtToken: response.data.token
                 });
                 this.props.history.push("/customer/home");
-              } else if (response.data.cred.user_type === 2) {
+              } else if (response.data.data.cred.user_type === 2) {
                 console.log("rest redirect");
                 cookie.save("cookie");
                 this.props.login({
-                  restaurant_id: response.data.cred._id,
-                  user_type: response.data.cred.user_type,
-                  login_id: response.data.restaurant._id,
-                  rest_id:response.data.restaurant.restaurant_id,
-                  email_id:response.data.cred.email_id
+                  restaurant_id: response.data.data.cred._id,
+                  user_type: response.data.data.cred.user_type,
+                  login_id: response.data.data.restaurant._id,
+                  rest_id:response.data.data.restaurant.restaurant_id,
+                  email_id:response.data.data.cred.email_id,
+                  jwtToken: response.data.data.token
                   
                 });
                 console.log(this.props)
                 this.props.history.push("/restaurant/home");
               }
               else{
-                console.log("else part for user_type"+response.data.cred.user_type)
+                console.log("else part for user_type"+response.data.data.cred.user_type)
               }
             }
           );

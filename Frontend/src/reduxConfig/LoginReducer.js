@@ -19,7 +19,8 @@ const loginReducer = (state = initialState, action) => {
                 login_id: action.payload.login_id,
                 cust_id: action.payload.cust_id,
                 rest_id: action.payload.rest_id,
-                email_id:action.payload.email_id
+                email_id:action.payload.email_id,
+                jwtToken: action.payload.jwtToken
             },
             console.log("action paylod for rest_id"+action.payload.restaurant_id)
             );
