@@ -72,17 +72,19 @@ class MessageContainer extends Component {
 
     }
     inputChangeHandler = (e) => {
+        console.log("inputchangehandler")
         const { value, name } = e.target;
         this.setState({ [name]: value });
     }
     render() {
         console.log(this.state)
         let messages
-        if (this.state.messages.length > 0) {
+        console.log(this.state.messages.length)
+        
             messages = this.state.messages.map((message, i) => {
-                return <Message key={i} message={message.message} user={message.action} time={message.time} />
+                return <Message  message={message.message} user={message.action} time={message.time} />
             })
-        }
+        
 
         let restDetails
         if (this.state.conversationData.restaurant_id) {

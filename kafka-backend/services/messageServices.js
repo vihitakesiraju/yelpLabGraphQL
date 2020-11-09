@@ -12,10 +12,10 @@ function handle_request(msg,callback){
  if(msg.api==="POST_MESSAGES"){
     console.log("Inside POST messages"+JSON.stringify(msg.body.message));
     if(msg.body.sender===2){
-        sender="Customer"
+        sender="Restaurant"
     }
     else{
-        sender="Restaurant"
+        sender="Customer"
     }
     let message={
         message: msg.body.message,
