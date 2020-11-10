@@ -24,9 +24,9 @@ const orders_schema= new Schema({
     },
     order_status: {
         type: String,
-        enum: ['Picked Up', 'Pick Up Ready', 'Order Placed', 'On The Way', 'In the making', 'Delivered', 'Cancelled'],
-        default: 'Order Placed',
-        required: true
+        
+        
+        
     },
     order_date: {
         type: Date,

@@ -19,7 +19,7 @@ module.exports.createOrder = (req, res) => {
   console.log("Inside Order Create POST service");
   console.log("req body" + JSON.stringify(req.body.cart_items[0]));
   data={
-    api:POST_ORDER,
+    api:"POST_ORDER",
     body: req.body
   }
   kafka.make_request('order_data', data, function(err,results){
@@ -128,7 +128,7 @@ module.exports.updateOrderStatus = (req, res) => {
   console.log(req.body);
 
   data={
-    api:UPDATE_ORDER,
+    api:"UPDATE_ORDER",
     body: req.body
   }
   kafka.make_request('order_data', data, function(err,results){

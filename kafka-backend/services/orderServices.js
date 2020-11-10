@@ -14,11 +14,12 @@ const mongoose=require('mongoose')
 function handle_request(msg,callback){
   console.log("in handle request orders")
     
-    if(msg.api===route.POST_ORDER){
+    if(msg.api==="POST_ORDER"){
         console.log("in post order")
         console.log(msg.body)
         let orderTotal = 0
         let itemsList = [];
+        
         msg.body.cart_items.map(async (cartItem) => {
             console.log(cartItem)
             let temp = new cart_data({
@@ -161,8 +162,10 @@ else if(msg.api===route.GET_ORDER_BY_RESTAURANT){
            
                     })
       }
+      
     
-    else if(msg.api===route.UPDATE_ORDER){
+    else if(msg.api==="UPDATE_ORDER"){
+        console.log("in update order")
         order_data.findOneAndUpdate({ _id: msg.body.order_id }, { order_status: msg.body.order_status_id }, (err, result) => {
             if (err) {
                 console.log('Error occured while updating order' + err)
