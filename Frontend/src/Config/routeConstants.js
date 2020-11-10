@@ -1,7 +1,7 @@
 module.exports = {
   //FRONTEND_URL: "http://localhost:3000",
-   BACKEND_URL: "http://54.219.166.144:3001",
-  BACKEND_URL: "http://50.18.30.125:3001",
+   FRONTEND_URL: "http://52.53.125.70:3000",
+  BACKEND_URL: "http://52.53.125.70:3001",
   //BACKEND_URL: "http://localhost:3001",
 
   //http://54.219.166.144
