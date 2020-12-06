@@ -61,51 +61,53 @@ class Login extends Component {
     //set the with credentials to true
     axios.defaults.withCredentials = true;
     //make a post request with the user data
+    console.log("submitted login")
     axios
       .post(`${RouteConstants.BACKEND_URL}${POST_LOGIN}`, data)
       .then((response) => {
         console.log("Status Code : ", response.status);
+        console.log(response.data)
         if (response.status === 200) {
-          console.log(response.data.data.cred);
-          user_type = response.data.data.cred.user_type;
+          console.log(response.data.cred);
+          user_type = response.data.cred.user_type;
           //console.log("user_type")
           console.log(user_type)
-          var decoded = jwt_decode(response.data.token.split(' ')[1]);
+          //var decoded = jwt_decode(response.data.token.split(' ')[1]);
           this.setState(
             {
               authFlag: true,
             },
             () => {
-              cookie.save("email", response.data.data.cred.email_id, {
+              cookie.save("email", response.data.cred.email_id, {
                 path: "/",
               });
-              cookie.save("user_type", response.data.data.cred.user_type, {
+              cookie.save("user_type", response.data.cred.user_type, {
                 path: "/",
               });
               console.log("Updated state");
               console.log(this.state.username)
-              if (response.data.data.cred.user_type === 1) {
+              if (response.data.cred.user_type === 1) {
                 console.log("cust redirect");
                 cookie.save("cookie");
                 this.props.login({
-                  customer_id: response.data.data.cred._id,
-                  user_type: response.data.data.cred.user_type,
-                  login_id: response.data.data.customer._id,
-                  cust_id:response.data.data.customer.customer_id,
-                  email_id:response.data.data.cred.email_id,
+                  customer_id: response.data.cred._id,
+                  user_type: response.data.cred.user_type,
+                  login_id: response.data.customer._id,
+                  //cust_id:response.data.data.customer.customer_id,
+                  email_id:response.data.cred.email_id,
                   jwtToken: response.data.token
                 });
                 this.props.history.push("/customer/home");
-              } else if (response.data.data.cred.user_type === 2) {
+              } else if (response.data.cred.user_type === 2) {
                 console.log("rest redirect");
                 cookie.save("cookie");
                 this.props.login({
-                  restaurant_id: response.data.data.cred._id,
-                  user_type: response.data.data.cred.user_type,
-                  login_id: response.data.data.restaurant._id,
-                  rest_id:response.data.data.restaurant.restaurant_id,
-                  email_id:response.data.data.cred.email_id,
-                  jwtToken: response.data.data.token
+                  restaurant_id: response.data.cred._id,
+                  user_type: response.data.cred.user_type,
+                  //login_id: response.data.restaurant._id,
+                 // rest_id:response.data.data.restaurant.restaurant_id,
+                  email_id:response.data.cred.email_id,
+                  //jwtToken: response.data.data.token
                   
                 });
                 console.log(this.props)

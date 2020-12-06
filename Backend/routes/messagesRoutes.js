@@ -1,6 +1,6 @@
 const express = require("express");
 const messageRouter = express.Router();
-const messageServices = require("../kafkaservices/messageServices");
+const messageServices = require("../services/messageServices");
 
 const {
     GET_MESSAGES,

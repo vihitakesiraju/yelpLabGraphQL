@@ -22,15 +22,15 @@ messages:[{
         type: String,
     },
     time:{
-        type: Date,
+        type: Date
     },
     action:{
         type: String,
     }
 
-    
+    }
 
-}]
+]
 });
 
 module.exports = messages_data = mongoose.model(

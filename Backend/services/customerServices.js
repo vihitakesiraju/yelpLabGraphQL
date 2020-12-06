@@ -12,113 +12,78 @@ const {
 
 const multer = require("multer");
 
+const customer_data=require('../models/customer_data');
+const login_credentials = require('../models/');
 
+module.exports.getAllCustomers = (req, res) => {
+ console.log("Inside Customer GET All service");
+};
+module.exports.getCustomer = (req, res) => {
+ console.log("Inside Customer GET service");
+   console.log("req params" + JSON.stringify(req.query));
+ 
+ };
+ module.exports.createCustomer = (req, res) => {
+   console.log("Inside Customer Create POST service");
+   console.log("req body" + JSON.stringify(req.body));
 
-// module.exports.getAllCustomers = (req, res) => {
-//   console.log("Inside Customer GET All service");
-//   con.query("SELECT * FROM customer_primary_data ", (error, result, fields) => {
-//     if (error) {
-//       console.log(error);
-//       //res.setHeader(CONTENT_TYPE, APP_JSON);
-//       res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(error));
-//     } else {
-//       console.log(JSON.stringify(result));
-//       //res.setHeader(CONTENT_TYPE, APP_JSON);
-//       res.status(RES_SUCCESS).end(JSON.stringify(result));
-//     }
-//   });
-// };
+   let logindetails=new login_credentials({
+    email_id: req.body.EMAIL,
+    user_password: req.body.PASSWORD,
+    user_type: 1
+})
+logindetails.save().then((res)=>{
+    console.log("insidelogindetails")
+    let id=mongoose.Types.ObjectId()
+    let customerdetails=new customer_data({
+    customer_id: id,
+    customer_name: msg.body.NAME,
+    email_id: msg.body.EMAIL,
+    birthday:msg.body.BIRTHDAY,
+    contact_number:msg.body.PHONE,
+    about:msg.body.ABOUT,
+    things_loved:msg.body.THINGS_LOVED,
+    find_me:msg.body.FIND_ME,
+    blog_ref:msg.body.BLOG_REF,
+    }
+)
+console.log("customerdetails"+customerdetails)
+customerdetails.save().then((res)=>{
+  res.status(RES_SUCCESS).send(JSON.stringify(response));
+}).catch(err=>{
+login_credentials.findOneAndDelete({email_id:req.body.EMAIL}).then(
+  res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(err))
+)
+})
+}).catch(err=>{
+    login_credentials.findOneAndDelete({email_id:req.body.EMAIL}).then(
+      res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(err))
+    )
+})
+ };
 
-// module.exports.getCustomer = (req, res) => {
-//   console.log("Inside Customer GET service");
-//   console.log("req params" + JSON.stringify(req.query));
-//   con.query(
-//     `SELECT * FROM customer_primary_data c1
-//    INNER JOIN customer_secondary_data c2 ON c1.customer_id=c2.customer_id 
-//    INNER JOIN profile_images p ON p.user_email=c1.email_id
-//    WHERE c1.email_id="${req.query.email_id}" ORDER BY p.image_path DESC LIMIT 1 `,
-//     (error, result) => {
-//       if (error) {
-//         console.log(error);
-//         //res.setHeader(CONTENT_TYPE, APP_JSON);
-//         con.rollback();
-//         res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(error));
-//       } else {
-//         console.log(JSON.stringify(result));
-//         //res.setHeader(CONTENT_TYPE, APP_JSON);
-//         res.status(RES_SUCCESS).end(JSON.stringify(result));
-//       }
-//     }
-//   );
-// };
+ module.exports.updateCustomerProfile = (req, res) => {
+      console.log("Inside Customer Update Profile service");
+   console.log("req body" + JSON.stringify(req.body));
 
-// module.exports.createCustomer = (req, res) => {
-//   console.log("Inside Customer Create POST service");
-//   console.log("req body" + JSON.stringify(req.body));
+   let cust_update={
+    customer_name: req.body.NAME,
+    birthday:req.body.BIRTHDAY,
+    contact_number:req.body.PHONE,
+    about:req.body.ABOUT,
+    things_loved:req.body.THINGS_LOVED,
+    find_me:req.body.FIND_ME,
+    blog_ref:req.body.BLOG_REF,
 
-//   con.query(
-//     `BEGIN;
-//         INSERT INTO login_credentials (email_id,user_password,user_type) VALUES ("${req.body.EMAIL}","${req.body.PASSWORD}","1");
-//         INSERT INTO customer_primary_data (customer_name, birthday, contact_number,email_id,about) VALUES ("${req.body.NAME}", "${req.body.BIRTHDAY}",${req.body.PHONE},"${req.body.EMAIL}","${req.body.ABOUT}");
-//         INSERT INTO customer_secondary_data (customer_id,things_loved,find_me,blog_ref,singup_date ) VALUES(LAST_INSERT_ID(),"${req.body.THINGS_LOVED}","${req.body.FIND_ME}","${req.body.BLOG_REF}",CURDATE());
-//         INSERT INTO profile_images (user_email,image_path) VALUES ("${req.body.EMAIL}"," ");
-//         COMMIT; `,
-//     (error, result) => {
-//       if (error) {
-//         console.log(error);
-//         //res.setHeader(CONTENT_TYPE, APP_JSON);
-//         con.rollback();
-//         res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(error));
-//       } else {
-//         console.log(JSON.stringify(result));
-//         //res.setHeader(CONTENT_TYPE, APP_JSON);
-//         res.status(RES_SUCCESS).end(JSON.stringify(result));
-//       }
-//     }
-//   );
+ }
+ customer.findByIdAndUpdate({customer_id:req.body.customer_id},customer,(err,result)=>{
+    if(err){
+        callback(err,'Error')
+        }
+        else{
+            callback(null,result)
+        }
+ })
 
-//   // con.query(`INSERT INTO login_credentials (email_id,user_password,user_type) VALUES ("${req.body.EMAIL}","${req.body.PASSWORD}","1")`.then((result) => {
-//   //         con.query(`INSERT INTO customer_primary_data (customer_name, birthday, contact_number,email_id,about) VALUES ("${req.body.NAME}", "${req.body.BIRTHDAY}",${req.body.PHONE},"${req.body.EMAIL}","${req.body.ABOUT}")`, (error, result) => {
+}
 
-//   //             else {
-//   //                 con.query(`INSERT INTO customer_secondary_data (customer_name, birthday, contact_number,email_id,about) VALUES ("${req.body.NAME}", "${req.body.BIRTHDAY}",${req.body.PHONE},"${req.body.EMAIL}","${req.body.ABOUT}")`, (error, result) => {
-
-//   //                 console.log(JSON.stringify(result));
-//   //                 //res.setHeader(CONTENT_TYPE, APP_JSON);
-//   //                 res.status(RES_SUCCESS).end(JSON.stringify(result));
-//   //             }
-//   //         })
-
-//   //     }
-//   // });
-
-//   // if (error) {
-//   //     console.log(error);
-//   //     //res.setHeader(CONTENT_TYPE, APP_JSON);
-//   //     res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(error));
-//   // }
-// };
-
-// module.exports.updateCustomerProfile = (req, res) => {
-//   console.log("Inside Customer Update Profile service");
-//   console.log("req body" + JSON.stringify(req.body));
-
-//   con.query(
-//     `BEGIN;
-//         UPDATE customer_primary_data SET birthday="${req.body.birthday}", contact_number="${req.body.contact_number}",about="${req.body.about}" WHERE email_id="req.body.email_id";
-//         UPDATE customer_secondary_data SET things_loved="${req.body.things_loved}",find_me="${req.body.find_me}",blog_ref="${req.body.blog_ref}"  WHERE email_id="req.body.email_id";
-//         COMMIT; `,
-//     (error, result) => {
-//       if (error) {
-//         console.log(error);
-//         con.rollback();
-//         //res.setHeader(CONTENT_TYPE, APP_JSON);
-//         res.status(RES_INTERNAL_SERVER_ERROR).end(JSON.stringify(error));
-//       } else {
-//         console.log(JSON.stringify(result));
-//         //res.setHeader(CONTENT_TYPE, APP_JSON);
-//         res.status(RES_SUCCESS).end(JSON.stringify(result));
-//       }
-//     }
-//   );
-// };

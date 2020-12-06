@@ -7,7 +7,7 @@ mongoose.connect("mongodb://localhost/yelp", {
 
 const mcon = mongoose.connection;
 mcon
-  .once("open", () => console.log("connected to db!!"))
+  .once("open", () => console.log("connected to mongoose!!"))
   .on("error", (error) => {
     console.log("Error", error);
   });

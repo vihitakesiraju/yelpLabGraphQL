@@ -1,6 +1,6 @@
 const express = require("express");
 const customerRouter = express.Router();
-const customerServices = require("../kafkaservices/customerServices");
+const customerServices = require("../services/customerServices");
 const {checkAuth}=require("../config/passport")
 const {
   GET_CUSTOMER_PROFILE,

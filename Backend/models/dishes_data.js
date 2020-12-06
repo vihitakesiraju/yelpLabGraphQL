@@ -2,38 +2,42 @@ const mongoose = require("mongoose");
 let Schema = mongoose.Schema;
 
 const dishes_schema = new Schema({
-  customer_id: {
-    type: Number,
-    required: true,
-    unique: true,
-    seq:{type}
-  },
-  customer_name: {
-    type: String,
-    required: true,
-  },
-  birthday: {
-    type: Date,
-    required: true,
-  },
-  contact_number: {
-    type: Number,
-    required: true,
-  
-  },
-  email_id: {
-    type: String,
-    required: true,
     
-  },
-  about: {
-    type: String,
-  },
+    dish_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+  
+    dish_name: {
+        type: String,
+        required: true
+    },
+    ingredients: {
+        type: String,
+        required: true
+    },
+    image_url: {
+        type: String,
+      
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    category_id: {
+        type: String,
+        required: true
+    },
+
 
 });
 
 module.exports = dishes_data = mongoose.model(
-  "dishes_data",
-  dishes_schema,
-  "dishes_data"
-);
+    "dishes_data",
+    dishes_schema,
+    
+  );

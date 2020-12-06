@@ -1,6 +1,6 @@
 const express = require("express");
 const loginRouter = express.Router();
-const loginServices = require("../kafkaservices/loginServices");
+const loginServices = require("../services/loginServices");
 const jwt = require('jsonwebtoken');
 const { POST_LOGIN } = require('../config/routeConstants');
 

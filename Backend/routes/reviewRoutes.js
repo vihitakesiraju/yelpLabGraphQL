@@ -1,6 +1,6 @@
 const express = require("express");
 const reviewRouter = express.Router();
-const reviewServices = require("../kafkaservices/reviewServices");
+const reviewServices = require("../services/reviewServices");
 
 const {
   GET_REVIEWS_BY_CUSTOMER,

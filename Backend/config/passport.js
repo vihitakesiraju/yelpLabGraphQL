@@ -2,9 +2,9 @@
 var JwtStrategy = require("passport-jwt").Strategy;
 var ExtractJwt = require("passport-jwt").ExtractJwt;
 const passport = require("passport");
-const login = require('../../kafka-backend/models/login_credentials');
+const login = require('../models/login_credentials');
 var jwt = require('jwt-simple');
-const config = require("../../kafka-backend/config/config");
+const config = require("../dbConnections/mongoose");
 
 // Setup work and export for the JWT passport strategy
 function auth() {

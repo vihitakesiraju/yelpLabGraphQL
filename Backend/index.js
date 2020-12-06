@@ -3,6 +3,7 @@ require("dotenv").config();
 let routeConstants = require("./config/routeConstants");
 var express = require("express");
 var app = express();
+const graphqlHTTP = require('express-graphql');
 var bodyParser = require("body-parser");
 var session = require("express-session");
 var cookieParser = require("cookie-parser");
@@ -10,7 +11,7 @@ var cookieParser = require("cookie-parser");
 var cors = require("cors");
 app.set("view engine", "ejs");
 const path = require("path");
-let mongo = require('../kafka-backend/config/config')
+// let mongo = require('../kafka-backend/config/config')
 
 
 
@@ -32,7 +33,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const eventRoutes = require("./routes/eventRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const imageRoutes = require("./routes/imageRoutes");
-const messagesRoutes = require("./routes/messagesRoutes");
+//const messagesRoutes = require("./routes/messagesRoutes");
 
 //use express session to maintain session data
 app.use(
@@ -69,15 +70,22 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use("/", loginRoutes);
-app.use("/customer", customerRoutes);
-app.use("/restaurant", restaurantRoutes);
-app.use("/orders", orderRoutes);
-app.use("/reviews", reviewRoutes);
-app.use("/images", imageRoutes);
+// app.use("/", loginRoutes);
+// app.use("/customer", customerRoutes);
+// app.use("/restaurant", restaurantRoutes);
+// app.use("/orders", orderRoutes);
+// app.use("/reviews", reviewRoutes);
+// app.use("/images", imageRoutes);
 
-app.use("/events", eventRoutes);
-app.use("/messages",messagesRoutes)
+// app.use("/events", eventRoutes);
+//app.use("/messages",messagesRoutes)
+
+
+app.use("/graphql",graphqlHTTP({
+  schema,
+  graphiql: true
+}));
+
 
 //start your server on port 3001
 app.listen(3001);

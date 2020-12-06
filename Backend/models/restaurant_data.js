@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 let Schema = mongoose.Schema;
 
-const restaurant_data = new Schema({
+const restaurant_schema = new Schema({
     restaurant_id: {
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
     required: true,
     unique: true,
   },
@@ -50,10 +50,42 @@ const restaurant_data = new Schema({
   secondary_phone: {
     type: Number,
   },
+  email: {
+    type: String,
+    required: true,
+    unique: true
+},
+open_time: {
+    type: String,
+    required: true,
+},
+close_time: {
+    type: String,
+    required: true,
+},
+stars_avg: {
+    type: Number,
+    default: 0
+},
+review_count: {
+    type: Number,
+    default: 0
+},
+is_open: {
+    type: Number,
+    default: 0
+},
+profile_image_link: {
+    type: String,
+},
+dishes:[{
+  type: mongoose.Schema.Types.ObjectId,
+  ref:'dishes_data'
+}]
 });
 
-module.exports = login = mongoose.model(
-  "login_credentials",
-  login_credentials,
-  "login_credentials"
+module.exports = restaurant_data = mongoose.model(
+  "restaurant_data",
+  restaurant_schema,
+  "restaurant_data"
 );
