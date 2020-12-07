@@ -82,6 +82,7 @@ dishes:[{
   type: mongoose.Schema.Types.ObjectId,
   ref:'dishes_data'
 }]
+
 });
 
 module.exports = restaurant_data = mongoose.model(

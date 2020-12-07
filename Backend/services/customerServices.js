@@ -13,7 +13,7 @@ const {
 const multer = require("multer");
 
 const customer_data=require('../models/customer_data');
-const login_credentials = require('../models/');
+const login_credentials = require('../models/login_credentials');
 
 module.exports.getAllCustomers = (req, res) => {
  console.log("Inside Customer GET All service");

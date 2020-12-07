@@ -3,16 +3,18 @@ require("dotenv").config();
 let routeConstants = require("./config/routeConstants");
 var express = require("express");
 var app = express();
-const graphqlHTTP = require('express-graphql');
+//const schema = require('./schema/schema');
+const {graphqlHTTP} = require('express-graphql');
 var bodyParser = require("body-parser");
 var session = require("express-session");
 var cookieParser = require("cookie-parser");
-//const connecttodb = require("./dbConnections/mongoose");
+const connecttodb = require("./dbConnections/mongoose");
 var cors = require("cors");
 app.set("view engine", "ejs");
 const path = require("path");
-// let mongo = require('../kafka-backend/config/config')
-
+//et mongo = require('..//config/config')
+const graphqlSchema = require('../Backend/GraphQL/Schema/schema');
+const graphqlResolver = require('../Backend/GraphQL/Resolvers/index');
 
 
 var passport = require('passport');
@@ -22,17 +24,17 @@ app.use(cors({ origin: `${routeConstants.FRONTEND_URL}`, credentials: true }));
 // const formidable = require('express-formidable');
 // app.use(formidable());
 
-app.use("/imageData", express.static(path.join(__dirname, "imageData")));
+//app.use("/imageData", express.static(path.join(__dirname, "imageData")));
 
-// app.use(express.static(path.join(__dirname, 'imageData')));
-//connecttodb;
-const customerRoutes = require("./routes/customerRoutes");
-const loginRoutes = require("./routes/loginRoute");
-const restaurantRoutes = require("./routes/restaurantRoutes");
-const orderRoutes = require("./routes/orderRoutes");
-const eventRoutes = require("./routes/eventRoutes");
-const reviewRoutes = require("./routes/reviewRoutes");
-const imageRoutes = require("./routes/imageRoutes");
+app.use(express.static(path.join(__dirname, 'imageData')));
+connecttodb;
+// const customerRoutes = require("./routes/customerRoutes");
+// const loginRoutes = require("./routes/loginRoute");
+// const restaurantRoutes = require("./routes/restaurantRoutes");
+// const orderRoutes = require("./routes/orderRoutes");
+// const eventRoutes = require("./routes/eventRoutes");
+// const reviewRoutes = require("./routes/reviewRoutes");
+// const imageRoutes = require("./routes/imageRoutes");
 //const messagesRoutes = require("./routes/messagesRoutes");
 
 //use express session to maintain session data
@@ -46,27 +48,18 @@ app.use(
   })
 );
 
-// app.use(bodyParser.urlencoded({
-//     extended: true
-//   }));
+app.use(bodyParser.urlencoded({
+    extended: true
+  }));
 app.use(bodyParser.json());
 
 //Allow Access Control
-app.use(function (req, res, next) {
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    `${routeConstants.FRONTEND_URL}`
-  );
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET,HEAD,OPTIONS,POST,PUT,DELETE"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
-  );
-  res.setHeader("Cache-Control", "no-cache");
+ app.use(function(req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+  res.setHeader('Cache-Control', 'no-cache');
   next();
 });
 
@@ -79,13 +72,14 @@ app.use(function (req, res, next) {
 
 // app.use("/events", eventRoutes);
 //app.use("/messages",messagesRoutes)
-
-
-app.use("/graphql",graphqlHTTP({
-  schema,
-  graphiql: true
-}));
-
+app.use('/graphql', (req, res) => {
+  return graphqlHTTP({
+    schema: graphqlSchema,
+    rootValue: graphqlResolver,
+    graphiql: true,
+    context: { req, res },
+  })(req, res)
+});
 
 //start your server on port 3001
 app.listen(3001);
