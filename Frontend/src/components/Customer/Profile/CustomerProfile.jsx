@@ -5,7 +5,8 @@ import "./CustomerProfile.styles.css";
 import CustomButton from "../../Common/CustomButton/CustomButton";
 import { Route } from "react-router";
 import cookie from "react-cookies";
-import routeConstants from "../../../Config/routeConstants";
+import routeConstants, { GET_ALL_CUSTOMER_PROFILES } from "../../../Config/routeConstants";
+import {postCustomerQuery} from '../../../mutation/mutations'
 import {connect} from 'react-redux'
 class UserProfile extends Component {
   state = {
@@ -45,42 +46,7 @@ class UserProfile extends Component {
     // console.log("in edit profile")
     let body;
     // console.log(cookie.load("email"));
-    axios
-      .get(
-        `${routeConstants.BACKEND_URL}/customer${routeConstants.GET_CUSTOMER_PROFILE}`,
-        {
-          params: {
-            email_id:this.props.email_id,
-          },
-        }
-      )
-      .then((res) => {
-        // console.log(this.state);
-        this.setState(
-          { oldDetails: { ...res.data }, ...res.data},
-          () => {
-            // console.log(this.state);
-          }
-        );
-      });
-
-    // fetch(`${routeConstants.BACKEND_URL}/imageData/TestImage.jpg`)
-    // .then((res) => {
-    //     this.setState({ img: res }, () => {
-    //         console.log(this.state)
-    //     })
-    // }).catch((err) => {
-    //     console.log(err)
-    // })
-    let outside;
-    fetch(`${routeConstants.BACKEND_URL}/imageData/TestImage.jpg`)
-      .then((response) => response.blob())
-      .then((images) => {
-        // Then create a local URL for that image and print it
-        outside = URL.createObjectURL(images);
-        this.setState({ img: outside });
-        // console.log(outside)
-      });
+ 
   }
 
   handleEdit = (e) => {
@@ -109,22 +75,25 @@ class UserProfile extends Component {
       ...userDetails,
       customer_id:this.props.customer_id
     };
+
+    this.props.postCustomerQuery({
+      variables: {
+        customer_id: this.state.customer_id,
+        customer_name: this.state.customer_name,
+        birthday: this.state.birthday,
+        contact_number: this.state.contact_number,
+        blog_ref: this.state.blog_ref,
+        find_me: this.state.find_me,
+        about: this.state.about,
+        yelping_since: this.state.yelping_since
+   
+       
+      },
+      refetchQueries: [{ query: postCustomerQuery }]
+  });
+
     // console.log(req)
-    axios
-      .put(
-        `${routeConstants.BACKEND_URL}/customer${routeConstants.UPDATE_CUSTOMER_PROFILE}`,
-        req
-      )
-      .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          window.alert("Changes Updated Successfully");
-        }
-      })
-      .catch((err) => {
-        window.alert("Unable to update changes");
-      });
-  };
+ 
 
   onFileUpload = (e) => {
     // e.preventDefault();
@@ -139,20 +108,20 @@ class UserProfile extends Component {
 
     // console.log(this.state)
     // console.log(JSON.stringify(formData.get("customer_id")))
-    axios
-      .post(
-        `${routeConstants.BACKEND_URL}/images${routeConstants.POST_IMAGE_USER_PROFILE}`,
-        // {
-        //     file: formData,
-        //     customer_id: this.state.customer_id,
-        //     customer_name: this.state.customer_name
-        // }
-        formData
-      )
-      .then((response) => {
-        this.setState({ image_path: response.data });
-      });
-  };
+  //   axios
+  //     .post(
+  //       `${routeConstants.BACKEND_URL}/images${routeConstants.POST_IMAGE_USER_PROFILE}`,
+  //       // {
+  //       //     file: formData,
+  //       //     customer_id: this.state.customer_id,
+  //       //     customer_name: this.state.customer_name
+  //       // }
+  //       formData
+  //     )
+  //     .then((response) => {
+  //       this.setState({ image_path: response.data });
+  //     });
+  // };
 
   fileData = () => {
     if (this.state.selectedFile) {
@@ -333,17 +302,7 @@ class UserProfile extends Component {
   }
 }
 
-//export default UserProfile;
-const mapStateToProps=(state)=>{
-  return {
-    email_id:state.email_id
-  }
-}
-
-const mapDispatchToProps=(dispatch)=>{
-  return{
-
-  }
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(UserProfile)
+export default compose(
+  graphql(getAuthorsQuery, { name: "getAuthorsQuery" }),
+  graphql(addBookMutation, { name: "addBookMutation" })
+)(UserProfile);

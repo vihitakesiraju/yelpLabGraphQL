@@ -6,11 +6,18 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import storeAndPersistor from "./reduxConfig/store";
 // import persistor from './reduxConfig/store'
-
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
 import { PersistGate } from "redux-persist/integration/react";
 
 const { store } = storeAndPersistor;
 const { persistor } = storeAndPersistor;
+
+
+const client = new ApolloClient({
+  uri: 'http://localhost:3001/graphql'
+});
+
 
 //App Component
 class App extends Component {

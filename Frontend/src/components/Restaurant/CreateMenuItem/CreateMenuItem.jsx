@@ -3,6 +3,7 @@ import Axios from "axios";
 import routeConstants from "../../../Config/routeConstants";
 import cookie from "react-cookies";
 import {connect} from 'react-redux'
+import {createDishQuery} from '../../../mutation/mutations'
 class CreateMenuItem extends Component {
   state = {
     description: "",
@@ -24,18 +25,23 @@ class CreateMenuItem extends Component {
       ...this.state,
     };
     console.log(postData);
-    Axios.post(
-      `${routeConstants.BACKEND_URL}/restaurant${routeConstants.POST_MENU_ITEM}`,
-      postData
-    )
-      .then((res) => {
-        console.log(res);
-        window.alert("Created Successfully");
-      })
-      .catch((err) => {
-        console.log(err);
-        window.alert("Unable to create");
-      });
+   
+    this.props.createDishQuery({
+      variables: {
+        description:this.state.description,
+            dish_name: this.state.dish_name,
+            image_url: this.state.image_url,
+            ingredients: this.state.ingredients,
+            price: this.state.price,
+            category_id:this.state.category_id,
+            restaurant_id: this.state.restaurant_id
+         
+            
+       
+      },
+      refetchQueries: [{ query: createDishQuery }]
+  });
+
   };
 
   onFileUpload = (e) => {
@@ -194,17 +200,8 @@ class CreateMenuItem extends Component {
   }
 }
 
-//export default CreateMenuItem;
-const mapStateToProps = (state) => {
-  return {
-      restaurant_id: state.login_id
-  };
-}
 
-const mapDispatchToProps = (dispatch) => {
-  return {
+export default compose(
+  graphql(createDishQuery, { name: "createDisheQuery" }),
 
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateMenuItem);
+)(CreateMenuItem);

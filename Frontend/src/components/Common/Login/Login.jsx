@@ -14,6 +14,8 @@ import {
 import loginImage from "../../../Assets/BackgroundImages/yelp-1-logo.png";
 import "./Login.styles.css";
 import jwt_decode from 'jwt-decode';
+
+import {postLoginQuery} from '../../../mutation/mutations'
 //Define a Login Component
 class Login extends Component {
   state = {
@@ -59,78 +61,19 @@ class Login extends Component {
     };
     let user_type;
     //set the with credentials to true
-    axios.defaults.withCredentials = true;
+    //axios.defaults.withCredentials = true;
     //make a post request with the user data
     console.log("submitted login")
-    axios
-      .post(`${RouteConstants.BACKEND_URL}${POST_LOGIN}`, data)
-      .then((response) => {
-        console.log("Status Code : ", response.status);
-        console.log(response.data)
-        if (response.status === 200) {
-          console.log(response.data.cred);
-          user_type = response.data.cred.user_type;
-          //console.log("user_type")
-          console.log(user_type)
-          //var decoded = jwt_decode(response.data.token.split(' ')[1]);
-          this.setState(
-            {
-              authFlag: true,
-            },
-            () => {
-              cookie.save("email", response.data.cred.email_id, {
-                path: "/",
-              });
-              cookie.save("user_type", response.data.cred.user_type, {
-                path: "/",
-              });
-              console.log("Updated state");
-              console.log(this.state.username)
-              if (response.data.cred.user_type === 1) {
-                console.log("cust redirect");
-                cookie.save("cookie");
-                this.props.login({
-                  customer_id: response.data.cred._id,
-                  user_type: response.data.cred.user_type,
-                  login_id: response.data.customer._id,
-                  //cust_id:response.data.data.customer.customer_id,
-                  email_id:response.data.cred.email_id,
-                  jwtToken: response.data.token
-                });
-                this.props.history.push("/customer/home");
-              } else if (response.data.cred.user_type === 2) {
-                console.log("rest redirect");
-                cookie.save("cookie");
-                this.props.login({
-                  restaurant_id: response.data.cred._id,
-                  user_type: response.data.cred.user_type,
-                  //login_id: response.data.restaurant._id,
-                 // rest_id:response.data.data.restaurant.restaurant_id,
-                  email_id:response.data.cred.email_id,
-                  //jwtToken: response.data.data.token
-                  
-                });
-                console.log(this.props)
-                this.props.history.push("/restaurant/home");
-              }
-              else{
-                console.log("else part for user_type"+response.data.data.cred.user_type)
-              }
-            }
-          );
-        } else {
-          this.setState({
-            authFlag: false,
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        this.setState({
-          loginStatus: "Login Failed",
-        });
-        //window.alert("Login Failed");
-      });
+    this.props.postLoginQuery({
+      variables: {
+          username: this.state.username,
+          password: this.state.password,
+ 
+       
+      },
+      refetchQueries: [{ query: postLoginQuery }]
+  });
+ 
   };
 
   render() {
@@ -227,23 +170,28 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    // email_id: state.loginReducer.login.email_id,
-    // password: state.loginReducer.login.password,
-    // authFlag: state.loginReducer.login.authFlag,
-    // loggedIn: state.loginReducer.loggedIn,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     // email_id: state.loginReducer.login.email_id,
+//     // password: state.loginReducer.login.password,
+//     // authFlag: state.loginReducer.login.authFlag,
+//     // loggedIn: state.loginReducer.loggedIn,
+//   };
+// };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    // counterIncrement: (counter) => dispatch(counterIncrement(counter))
-    // emailHandler: (email_id) => dispatch(emailHandler(email_id)),
-    // passwordHandler: (password) => dispatch(passwordHandler(password)),
-    // authFlagHandler: (authFlag) => dispatch(authFlagHandler(authFlag)),
-    login: (loggedIn) => dispatch(login(loggedIn)),
-  };
-};
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     // counterIncrement: (counter) => dispatch(counterIncrement(counter))
+//     // emailHandler: (email_id) => dispatch(emailHandler(email_id)),
+//     // passwordHandler: (password) => dispatch(passwordHandler(password)),
+//     // authFlagHandler: (authFlag) => dispatch(authFlagHandler(authFlag)),
+//     login: (loggedIn) => dispatch(login(loggedIn)),
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+//export default {connect(mapStateToProps, mapDispatchToProps)}(Login);
+
+export default compose(
+  graphql(postLoginQuery, { name: "postLoginQuery" }),
+
+)(Login);
