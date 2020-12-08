@@ -1,9 +1,10 @@
 const LoginResolver = require('./Login');
 const RestaurantResolver=require('./Restaurant')
-
+const CustomerResolver=require('./Customer')
 const rootResolver = {
 ...LoginResolver,
-...RestaurantResolver
+...RestaurantResolver,
+...CustomerResolver
 };
 
 module.exports = rootResolver;

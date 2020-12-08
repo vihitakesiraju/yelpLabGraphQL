@@ -4,7 +4,8 @@ let Schema = mongoose.Schema;
 //autoIncrement.initialize(mongoose.connection)
 const customer_schema = new Schema({
   customer_id:{
-   type:mongoose.Schema.Types.ObjectId,
+   //type:mongoose.Schema.Types.ObjectId,
+   type: Number,
    required: true,
   },
   customer_name: {
